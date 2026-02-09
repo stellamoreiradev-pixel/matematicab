@@ -1,0 +1,2072 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matemática: Domínio Total</title>
+<style>
+/* ============================================
+   VARIÁVEIS E RESET
+   ============================================ */
+:root {
+  --bg-primary: #0a0e14;
+  --bg-secondary: #12181f;
+  --bg-tertiary: #1a222c;
+  --bg-card: #151c25;
+  --border: #2a3544;
+  --border-light: #3a4555;
+  --text-primary: #e8edf4;
+  --text-secondary: #9aa5b4;
+  --text-muted: #6b7785;
+  --accent-blue: #4fa3f7;
+  --accent-green: #4ade80;
+  --accent-yellow: #facc15;
+  --accent-orange: #fb923c;
+  --accent-red: #f87171;
+  --accent-purple: #a78bfa;
+  --accent-pink: #f472b6;
+  --accent-cyan: #22d3ee;
+  --shadow: 0 4px 20px rgba(0,0,0,0.3);
+  --radius: 10px;
+  --radius-sm: 6px;
+  --transition: 0.15s ease;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+  font-size: 14px;
+}
+
+/* ============================================
+   LAYOUT
+   ============================================ */
+.app { display: flex; flex-direction: column; min-height: 100vh; }
+
+header {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.logo h1 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.logo span {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+nav { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+nav button {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+nav button:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+nav button.active { background: var(--accent-blue); border-color: var(--accent-blue); color: #000; font-weight: 600; }
+
+main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  width: 100%;
+}
+
+/* ============================================
+   COMPONENTES
+   ============================================ */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.card-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.btn-primary { background: var(--accent-blue); color: #000; }
+.btn-primary:hover { filter: brightness(1.1); }
+.btn-secondary { background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border); }
+.btn-secondary:hover { background: var(--border); }
+.btn-success { background: var(--accent-green); color: #000; }
+.btn-warning { background: var(--accent-yellow); color: #000; }
+.btn-danger { background: var(--accent-red); color: #000; }
+.btn-sm { padding: 0.25rem 0.5rem; font-size: 0.7rem; }
+.btn-xs { padding: 0.2rem 0.4rem; font-size: 0.65rem; }
+
+.tag {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 50px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.tag-nao-iniciado { background: rgba(107,119,133,0.2); color: var(--text-muted); }
+.tag-em-andamento { background: rgba(79,163,247,0.2); color: var(--accent-blue); }
+.tag-revisar { background: rgba(250,204,21,0.2); color: var(--accent-yellow); }
+.tag-concluido { background: rgba(74,222,128,0.2); color: var(--accent-green); }
+
+.dominio-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.dominio-0 { background: rgba(248,113,113,0.2); color: var(--accent-red); }
+.dominio-1 { background: rgba(251,146,60,0.2); color: var(--accent-orange); }
+.dominio-2 { background: rgba(250,204,21,0.2); color: var(--accent-yellow); }
+.dominio-3 { background: rgba(79,163,247,0.2); color: var(--accent-blue); }
+.dominio-4 { background: rgba(74,222,128,0.2); color: var(--accent-green); }
+
+.progress-bar {
+  height: 6px;
+  background: var(--bg-tertiary);
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 50px;
+  transition: width 0.4s ease;
+}
+
+.progress-fill.green { background: linear-gradient(90deg, var(--accent-green), #22c55e); }
+.progress-fill.blue { background: linear-gradient(90deg, var(--accent-blue), #3b82f6); }
+.progress-fill.yellow { background: linear-gradient(90deg, var(--accent-yellow), #eab308); }
+.progress-fill.red { background: linear-gradient(90deg, var(--accent-red), #ef4444); }
+.progress-fill.cyan { background: linear-gradient(90deg, var(--accent-cyan), #06b6d4); }
+
+input, select, textarea {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 0.5rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  width: 100%;
+  transition: var(--transition);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 2px rgba(79,163,247,0.15);
+}
+
+label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+.form-group { margin-bottom: 0.75rem; }
+.form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.75rem; }
+
+/* ============================================
+   DASHBOARD
+   ============================================ */
+.quick-help {
+  background: linear-gradient(135deg, rgba(34,211,238,0.08) 0%, rgba(79,163,247,0.05) 100%);
+  border: 1px solid rgba(34,211,238,0.25);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.quick-help h3 { font-size: 0.85rem; color: var(--accent-cyan); margin-bottom: 0.35rem; }
+.quick-help p { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem;
+  text-align: center;
+}
+
+.stat-value { font-size: 1.4rem; font-weight: 700; line-height: 1.1; }
+.stat-label { font-size: 0.65rem; color: var(--text-muted); margin-top: 0.2rem; }
+.stat-card.highlight { background: linear-gradient(135deg, rgba(34,211,238,0.1) 0%, rgba(79,163,247,0.05) 100%); border-color: var(--accent-cyan); }
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.75rem;
+}
+
+.module-progress { margin-bottom: 0.5rem; }
+.module-progress-header { display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 0.25rem; }
+.module-progress-header strong { color: var(--text-primary); }
+.module-progress-header span { color: var(--text-muted); }
+
+.revisao-item, .hoje-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.35rem;
+  border-left: 3px solid var(--accent-yellow);
+  font-size: 0.8rem;
+}
+
+.revisao-item.vencida { border-left-color: var(--accent-red); background: rgba(248,113,113,0.05); }
+.hoje-item { border-left-color: var(--accent-cyan); }
+
+.revisao-item .info, .hoje-item .info { flex: 1; min-width: 0; }
+.revisao-item .title, .hoje-item .title { font-size: 0.75rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.revisao-item .meta, .hoje-item .meta { font-size: 0.6rem; color: var(--text-muted); }
+.revisao-item .actions, .hoje-item .actions { display: flex; gap: 0.25rem; flex-shrink: 0; }
+
+.hoje-config {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.hoje-config label { margin: 0; font-size: 0.7rem; }
+.hoje-config select, .hoje-config input { width: 70px; padding: 0.3rem; }
+
+/* ============================================
+   TRILHA
+   ============================================ */
+.filters-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.filters-bar input, .filters-bar select { width: auto; min-width: 120px; flex: 1; }
+.filters-bar .search-input { min-width: 180px; }
+
+.fase-section { margin-bottom: 1.25rem; }
+
+.fase-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0.8rem;
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+}
+
+.fase-header h2 { font-size: 0.85rem; color: var(--accent-cyan); display: flex; align-items: center; gap: 0.5rem; }
+.fase-header .fase-stats { font-size: 0.7rem; color: var(--text-muted); display: flex; gap: 1rem; }
+.fase-header .fase-badge { font-size: 0.6rem; background: var(--accent-yellow); color: #000; padding: 0.1rem 0.4rem; border-radius: 50px; }
+
+.fase-content { display: none; padding-left: 0.5rem; }
+.fase-content.open { display: block; }
+
+.modulo-section { margin-bottom: 0.75rem; margin-left: 0.5rem; }
+
+.modulo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.7rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.modulo-header:hover { background: var(--bg-tertiary); }
+.modulo-header.prioridade-alta { border-left: 3px solid var(--accent-yellow); }
+.modulo-header h3 { font-size: 0.8rem; display: flex; align-items: center; gap: 0.4rem; }
+.modulo-header .mod-badge { font-size: 0.55rem; background: var(--accent-orange); color: #000; padding: 0.1rem 0.35rem; border-radius: 50px; }
+.modulo-header .stats { display: flex; gap: 0.75rem; font-size: 0.65rem; color: var(--text-muted); }
+
+.modulo-content { display: none; padding: 0.4rem 0 0.4rem 1rem; }
+.modulo-content.open { display: block; }
+
+.item-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto auto auto;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.45rem 0.6rem;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.25rem;
+  border: 1px solid transparent;
+  transition: var(--transition);
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.item-row:hover { border-color: var(--border-light); background: var(--border); }
+
+.item-row .checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border-light);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  transition: var(--transition);
+}
+
+.item-row.concluido .checkbox { background: var(--accent-green); border-color: var(--accent-green); color: #000; }
+.item-row.concluido .checkbox::after { content: '✓'; }
+
+.item-row .nome { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.item-row .fonte { font-size: 0.55rem; color: var(--text-muted); background: var(--bg-secondary); padding: 0.1rem 0.3rem; border-radius: 3px; }
+.item-row .questoes { font-size: 0.6rem; color: var(--text-muted); display: flex; gap: 0.3rem; }
+.item-row .questoes .ok { color: var(--accent-green); }
+.item-row .questoes .err { color: var(--accent-red); }
+
+/* ============================================
+   EXERCÍCIOS
+   ============================================ */
+.ex-form { max-width: 550px; }
+
+.historico-item {
+  display: grid;
+  grid-template-columns: 70px 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.5rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.35rem;
+  border: 1px solid var(--border);
+  font-size: 0.75rem;
+}
+
+.historico-item .data { font-size: 0.65rem; color: var(--text-muted); }
+.historico-item .resultado { display: flex; gap: 0.4rem; font-size: 0.7rem; }
+
+/* ============================================
+   METAS
+   ============================================ */
+.metas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.meta-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+
+.meta-card h4 { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+.meta-card .valor { font-size: 1.6rem; font-weight: 700; }
+.meta-card .meta-info { font-size: 0.65rem; color: var(--text-muted); margin-top: 0.3rem; }
+.meta-card .progress-bar { margin-top: 0.5rem; }
+.meta-card input { margin-bottom: 0.5rem; }
+
+.semana-info {
+  background: var(--bg-secondary);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+}
+
+.auto-metas {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.auto-metas h4 { font-size: 0.8rem; margin-bottom: 0.5rem; }
+.auto-metas p { font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
+.auto-metas .tempo-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+/* ============================================
+   BACKUP
+   ============================================ */
+.backup-section { max-width: 550px; }
+.backup-buttons { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
+
+.danger-zone {
+  background: rgba(248,113,113,0.05);
+  border: 1px solid rgba(248,113,113,0.25);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-top: 1.5rem;
+}
+
+.danger-zone h3 { color: var(--accent-red); font-size: 0.85rem; margin-bottom: 0.35rem; }
+.danger-zone p { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+
+/* ============================================
+   MODAL
+   ============================================ */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition);
+}
+
+.modal-overlay.active { opacity: 1; visibility: visible; }
+
+.modal {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: translateY(15px);
+  transition: var(--transition);
+}
+
+.modal-overlay.active .modal { transform: translateY(0); }
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h3 { font-size: 0.9rem; }
+.modal-close { background: none; border: none; color: var(--text-muted); font-size: 1.3rem; cursor: pointer; line-height: 1; }
+.modal-close:hover { color: var(--text-primary); }
+.modal-body { padding: 1rem; }
+.modal-footer { display: flex; justify-content: flex-end; gap: 0.5rem; padding: 0.75rem 1rem; border-top: 1px solid var(--border); }
+
+.review-btns { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.5rem; }
+
+/* ============================================
+   RESPONSIVO
+   ============================================ */
+@media (max-width: 768px) {
+  .header-content { flex-direction: column; align-items: flex-start; }
+  nav { width: 100%; overflow-x: auto; }
+  nav button { flex-shrink: 0; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .item-row { grid-template-columns: auto 1fr auto; }
+  .item-row .questoes, .item-row .fonte { display: none; }
+  .filters-bar { flex-direction: column; }
+  .filters-bar input, .filters-bar select { width: 100%; }
+}
+
+.page { display: none; }
+.page.active { display: block; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.card { animation: fadeIn 0.25s ease; }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+.prereq-alert {
+  background: rgba(251,146,60,0.1);
+  border: 1px solid rgba(251,146,60,0.3);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.7rem;
+  color: var(--accent-orange);
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header>
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon">∑</div>
+        <div>
+          <h1>Matemática: Domínio Total</h1>
+          <span>Base sólida para concursos</span>
+        </div>
+      </div>
+      <nav>
+        <button class="active" data-page="dashboard">📊 Dashboard</button>
+        <button data-page="trilha">🛤️ Trilha</button>
+        <button data-page="exercicios">✏️ Exercícios</button>
+        <button data-page="metas">🎯 Metas</button>
+        <button data-page="backup">💾 Backup</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============================================
+         DASHBOARD
+         ============================================ -->
+    <div id="page-dashboard" class="page active">
+      <div class="quick-help">
+        <h3>🚀 Como usar em 30s</h3>
+        <p><strong>1)</strong> Siga a <em>Trilha</em> em ordem (Fase 1→10). <strong>2)</strong> Clique em um item para editar status, domínio e agendar revisão. <strong>3)</strong> Registre exercícios em <em>Exercícios</em>. <strong>4)</strong> Siga as tarefas de <em>Hoje</em> abaixo — elas priorizam revisões vencidas e suas fraquezas!</p>
+      </div>
+
+      <div class="stats-grid" id="stats-grid"></div>
+
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">📈 Progresso por Fase</h2>
+          </div>
+          <div id="fases-progress"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">🔔 Fila de Revisão</h2>
+            <label style="font-size:0.65rem;display:flex;align-items:center;gap:0.3rem;">
+              <input type="checkbox" id="filtro-vencidas" style="width:auto;"> Só vencidas
+            </label>
+          </div>
+          <p style="font-size:0.65rem;color:var(--text-muted);margin-bottom:0.5rem;">Revisão espaçada: ao fazer, agende nova revisão (7d/15d/30d). Cada vez que concluir, o app conta +1 revisão na semana.</p>
+          <div id="fila-revisao"></div>
+        </div>
+
+        <div class="card" style="grid-column: 1 / -1;">
+          <div class="card-header">
+            <h2 class="card-title">📅 Hoje — O que estudar</h2>
+            <div class="hoje-config">
+              <label>Tempo:</label>
+              <select id="hoje-tempo">
+                <option value="30">30 min</option>
+                <option value="60" selected>60 min</option>
+                <option value="90">90 min</option>
+                <option value="120">120 min</option>
+              </select>
+              <label>Tarefas:</label>
+              <select id="hoje-qtd">
+                <option value="5">5</option>
+                <option value="8" selected>8</option>
+                <option value="10">10</option>
+                <option value="12">12</option>
+              </select>
+              <button class="btn btn-sm btn-primary" onclick="gerarHoje()">Gerar</button>
+            </div>
+          </div>
+          <div id="lista-hoje"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================
+         TRILHA
+         ============================================ -->
+    <div id="page-trilha" class="page">
+      <div class="filters-bar">
+        <input type="text" id="filtro-busca" class="search-input" placeholder="🔍 Buscar item...">
+        <select id="filtro-fase">
+          <option value="">Todas as fases</option>
+        </select>
+        <select id="filtro-status">
+          <option value="">Todos status</option>
+          <option value="nao-iniciado">Não iniciado</option>
+          <option value="em-andamento">Em andamento</option>
+          <option value="revisar">Revisar</option>
+          <option value="concluido">Concluído</option>
+        </select>
+        <select id="filtro-dominio">
+          <option value="">Todos domínios</option>
+          <option value="0">0 — Travo</option>
+          <option value="1">1 — C/ ajuda</option>
+          <option value="2">2 — Fáceis</option>
+          <option value="3">3 — Médias</option>
+          <option value="4">4 — Domino</option>
+        </select>
+        <select id="filtro-fonte">
+          <option value="">Todas fontes</option>
+          <option value="Ferretto">Ferretto</option>
+          <option value="Livro">Livro</option>
+          <option value="Ambos">Ambos</option>
+        </select>
+        <select id="filtro-ordenar">
+          <option value="trilha">Ordem da trilha</option>
+          <option value="dominio-menor">Menor domínio</option>
+          <option value="mais-erros">Mais erros</option>
+          <option value="revisoes-vencidas">Revisões vencidas</option>
+        </select>
+      </div>
+
+      <div id="trilha-lista"></div>
+    </div>
+
+    <!-- ============================================
+         EXERCÍCIOS
+         ============================================ -->
+    <div id="page-exercicios" class="page">
+      <div class="card ex-form">
+        <div class="card-header">
+          <h2 class="card-title">✏️ Registrar Exercícios</h2>
+        </div>
+        <div class="form-group">
+          <label>Item</label>
+          <select id="ex-item"></select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Feitas</label>
+            <input type="number" id="ex-feitas" min="0" value="10">
+          </div>
+          <div class="form-group">
+            <label>Acertos</label>
+            <input type="number" id="ex-acertos" min="0" value="0">
+          </div>
+          <div class="form-group">
+            <label>Erros</label>
+            <input type="number" id="ex-erros" min="0" value="0">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Erro típico (opcional)</label>
+          <textarea id="ex-erro" rows="2" placeholder="Ex: Esqueci regra de sinais..."></textarea>
+        </div>
+        <button class="btn btn-primary" onclick="registrarExercicio()">💾 Salvar</button>
+      </div>
+
+      <div class="card" style="margin-top:1rem;">
+        <div class="card-header">
+          <h2 class="card-title">📜 Histórico Recente</h2>
+        </div>
+        <div id="historico-lista"></div>
+      </div>
+    </div>
+
+    <!-- ============================================
+         METAS
+         ============================================ -->
+    <div id="page-metas" class="page">
+      <div class="semana-info" id="semana-info"></div>
+
+      <div class="metas-grid">
+        <div class="meta-card">
+          <h4>🎯 Questões/Semana</h4>
+          <input type="number" id="meta-questoes" min="0" value="50">
+          <div class="valor" id="val-questoes">0</div>
+          <div class="meta-info">de <span id="meta-q-label">50</span></div>
+          <div class="progress-bar"><div class="progress-fill blue" id="prog-questoes" style="width:0%;"></div></div>
+        </div>
+        <div class="meta-card">
+          <h4>✅ Itens Concluídos</h4>
+          <input type="number" id="meta-concluidos" min="0" value="6">
+          <div class="valor" id="val-concluidos">0</div>
+          <div class="meta-info">de <span id="meta-c-label">6</span></div>
+          <div class="progress-bar"><div class="progress-fill green" id="prog-concluidos" style="width:0%;"></div></div>
+        </div>
+        <div class="meta-card">
+          <h4>🔄 Revisões/Semana</h4>
+          <input type="number" id="meta-revisoes" min="0" value="14">
+          <div class="valor" id="val-revisoes">0</div>
+          <div class="meta-info">de <span id="meta-r-label">14</span></div>
+          <div class="progress-bar"><div class="progress-fill yellow" id="prog-revisoes" style="width:0%;"></div></div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" onclick="salvarMetas()">💾 Salvar Metas</button>
+
+      <div class="auto-metas">
+        <h4>⚡ Definir metas automaticamente</h4>
+        <p>Escolha seu tempo disponível por dia e o app sugere metas semanais realistas:</p>
+        <div class="tempo-btns">
+          <button class="btn btn-secondary" onclick="autoMetas(30)">30 min/dia</button>
+          <button class="btn btn-secondary" onclick="autoMetas(60)">60 min/dia</button>
+          <button class="btn btn-secondary" onclick="autoMetas(90)">90 min/dia</button>
+          <button class="btn btn-secondary" onclick="autoMetas(120)">120 min/dia</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================
+         BACKUP
+         ============================================ -->
+    <div id="page-backup" class="page">
+      <div class="backup-section">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">💾 Backup & Restauração</h2>
+          </div>
+          <p style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:0.75rem;">Exporte seus dados ou importe um backup anterior.</p>
+          <div class="backup-buttons">
+            <button class="btn btn-primary" onclick="exportarDados()">📤 Exportar JSON</button>
+            <button class="btn btn-secondary" onclick="document.getElementById('import-file').click()">📥 Importar JSON</button>
+            <input type="file" id="import-file" accept=".json" style="display:none;" onchange="importarDados(event)">
+          </div>
+        </div>
+
+        <div class="danger-zone">
+          <h3>⚠️ Zona de Perigo</h3>
+          <p>Apaga TODOS os dados. Não pode ser desfeito.</p>
+          <button class="btn btn-danger" onclick="resetarDados()">🗑️ Resetar Tudo</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL EDIÇÃO -->
+<div class="modal-overlay" id="modal-edit">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-titulo">Editar Item</h3>
+      <button class="modal-close" onclick="fecharModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div id="prereq-warning" class="prereq-alert" style="display:none;"></div>
+      <input type="hidden" id="edit-id">
+      <div class="form-group">
+        <label>Status</label>
+        <select id="edit-status">
+          <option value="nao-iniciado">Não iniciado</option>
+          <option value="em-andamento">Em andamento</option>
+          <option value="revisar">Revisar</option>
+          <option value="concluido">Concluído</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Domínio (0-4)</label>
+        <select id="edit-dominio">
+          <option value="0">0 — Travo / não sei</option>
+          <option value="1">1 — Entendo com ajuda</option>
+          <option value="2">2 — Faço questões fáceis</option>
+          <option value="3">3 — Médias e explico</option>
+          <option value="4">4 — Domino e acerto em prova</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Fonte</label>
+        <select id="edit-fonte">
+          <option value="Ambos">Ambos</option>
+          <option value="Ferretto">Ferretto</option>
+          <option value="Livro">Livro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Erros Típicos</label>
+        <textarea id="edit-erros" rows="2" placeholder="Anote erros comuns..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Agendar Revisão</label>
+        <div class="review-btns">
+          <button class="btn btn-xs btn-secondary" onclick="agendarRevisao(1)">1d</button>
+          <button class="btn btn-xs btn-secondary" onclick="agendarRevisao(7)">7d</button>
+          <button class="btn btn-xs btn-secondary" onclick="agendarRevisao(15)">15d</button>
+          <button class="btn btn-xs btn-secondary" onclick="agendarRevisao(30)">30d</button>
+          <button class="btn btn-xs btn-secondary" onclick="limparRevisao()">Limpar</button>
+        </div>
+        <small id="edit-due-info" style="color:var(--text-muted);margin-top:0.3rem;display:block;"></small>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="fecharModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="salvarEdicao()">💾 Salvar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================
+   TRILHA DE APRENDIZADO (CONTEÚDO)
+   ============================================
+   
+   COMO EDITAR A TRILHA:
+   Modifique o array TRILHA abaixo.
+   Estrutura: fases[] → módulos[] → itens[]
+   
+   Cada item:
+   - nome: string
+   - fonte: "Ferretto" | "Livro" | "Ambos"
+   
+   COMO AJUSTAR PRIORIDADES:
+   - Módulos/Fases com prioridadeBB: true serão destacados
+   - O algoritmo "Hoje" usa faseId para determinar ordem
+*/
+const TRILHA = [
+  {
+    id: 1,
+    nome: "Fase 1 — Fundamentos e Linguagem",
+    modulos: [
+      {
+        id: 1,
+        nome: "Módulo 1: Linguagem Matemática",
+        itens: [
+          { nome: "Linguagem matemática (símbolos, leitura)", fonte: "Livro" },
+          { nome: "Números famosos (introdução)", fonte: "Livro" },
+          { nome: "Problemas simples iniciais (interpretação)", fonte: "Livro" }
+        ]
+      },
+      {
+        id: 2,
+        nome: "Módulo 2: Sistema de Numeração",
+        itens: [
+          { nome: "Sistema de numeração decimal", fonte: "Ferretto" },
+          { nome: "Algarismos, valor absoluto e relativo", fonte: "Livro" },
+          { nome: "Classes e ordens; escrever por extenso", fonte: "Livro" },
+          { nome: "Numerais romanos", fonte: "Livro" }
+        ]
+      },
+      {
+        id: 3,
+        nome: "Módulo 3: Conjuntos Numéricos",
+        itens: [
+          { nome: "Naturais", fonte: "Ferretto" },
+          { nome: "Inteiros", fonte: "Ferretto" },
+          { nome: "Racionais", fonte: "Ferretto" },
+          { nome: "Decimais exatos e dízimas periódicas", fonte: "Ferretto" },
+          { nome: "Irracionais", fonte: "Ferretto" },
+          { nome: "Reais", fonte: "Ferretto" },
+          { nome: "Revisão: tipos de número e exemplos", fonte: "Ambos" }
+        ]
+      }
+    ]
+  },
+  {
+    id: 2,
+    nome: "Fase 2 — Aritmética com Fluência",
+    modulos: [
+      {
+        id: 4,
+        nome: "Módulo 4: Calcule Rápido",
+        itens: [
+          { nome: "Estratégias de soma/subtração rápida", fonte: "Livro" },
+          { nome: "Multiplicação mental básica", fonte: "Livro" },
+          { nome: "Divisão exata e prova real", fonte: "Livro" },
+          { nome: "Quadrados perfeitos e cubos", fonte: "Livro" },
+          { nome: "A prova dos 9", fonte: "Livro" },
+          { nome: "Zero e um / propriedades", fonte: "Livro" }
+        ]
+      },
+      {
+        id: 5,
+        nome: "Módulo 5: As 4 Operações",
+        itens: [
+          { nome: "Adição e subtração", fonte: "Ferretto" },
+          { nome: "Multiplicação", fonte: "Ferretto" },
+          { nome: "Divisão", fonte: "Ferretto" },
+          { nome: "Termos das operações e problemas", fonte: "Livro" },
+          { nome: "Propriedades: fechamento, comutativa, associativa, distributiva", fonte: "Livro" },
+          { nome: "Expressões com as quatro operações", fonte: "Ambos" },
+          { nome: "Expressões numéricas Parte 1", fonte: "Ferretto" },
+          { nome: "Expressões numéricas Parte 2", fonte: "Ferretto" }
+        ]
+      }
+    ]
+  },
+  {
+    id: 3,
+    nome: "Fase 3 — Divisibilidade, Primos, MMC/MDC",
+    modulos: [
+      {
+        id: 6,
+        nome: "Módulo 6: Múltiplos, Divisores e Fatoração",
+        itens: [
+          { nome: "Múltiplos e divisores", fonte: "Ferretto" },
+          { nome: "Critérios de divisibilidade", fonte: "Ambos" },
+          { nome: "Números primos e compostos", fonte: "Ferretto" },
+          { nome: "Crivo de Eratóstenes", fonte: "Livro" },
+          { nome: "Fatoração de naturais", fonte: "Ambos" },
+          { nome: "Divisores de um inteiro; número de divisores", fonte: "Livro" },
+          { nome: "MMC", fonte: "Ambos" },
+          { nome: "MDC", fonte: "Ambos" },
+          { nome: "Primos entre si; propriedades MMC/MDC", fonte: "Livro" },
+          { nome: "Problemas clássicos: ciclos", fonte: "Livro" }
+        ]
+      }
+    ]
+  },
+  {
+    id: 4,
+    nome: "Fase 4 — Frações e Decimais",
+    prereqFase: true,
+    modulos: [
+      {
+        id: 7,
+        nome: "Módulo 7: Frações",
+        itens: [
+          { nome: "Fração como divisão; nomenclatura", fonte: "Livro" },
+          { nome: "Frações equivalentes e simplificação", fonte: "Livro" },
+          { nome: "Tipos: própria, imprópria, mista, aparente", fonte: "Livro" },
+          { nome: "Frações", fonte: "Ferretto" },
+          { nome: "Operações com frações", fonte: "Ferretto" },
+          { nome: "Expressões com frações", fonte: "Livro" },
+          { nome: "Potência de fração", fonte: "Livro" },
+          { nome: "Problemas clássicos com frações", fonte: "Livro" }
+        ]
+      },
+      {
+        id: 8,
+        nome: "Módulo 8: Decimais e Dízimas",
+        itens: [
+          { nome: "Números decimais; conversões fração↔decimal", fonte: "Livro" },
+          { nome: "Decimais exatos e dízimas periódicas (reforço)", fonte: "Ferretto" },
+          { nome: "Fração geratriz", fonte: "Livro" },
+          { nome: "Divisão com aproximação", fonte: "Livro" }
+        ]
+      }
+    ]
+  },
+  {
+    id: 5,
+    nome: "Fase 5 — Potências e Raízes",
+    modulos: [
+      {
+        id: 9,
+        nome: "Módulo 9: Potenciação",
+        itens: [
+          { nome: "Potenciação", fonte: "Ferretto" },
+          { nome: "Propriedades de potências", fonte: "Livro" },
+          { nome: "Potências de 10 e notação científica", fonte: "Ambos" },
+          { nome: "Comparando potências", fonte: "Livro" },
+          { nome: "Potência de decimal e aplicações", fonte: "Livro" }
+        ]
+      },
+      {
+        id: 10,
+        nome: "Módulo 10: Radiciação",
+        itens: [
+          { nome: "Radiciação: introdução", fonte: "Ferretto" },
+          { nome: "Propriedades 1", fonte: "Ferretto" },
+          { nome: "Propriedades 2", fonte: "Ferretto" },
+          { nome: "Racionalização de denominadores", fonte: "Ferretto" },
+          { nome: "Quadrados perfeitos (revisão)", fonte: "Livro" }
+        ]
+      }
+    ]
+  },
+  {
+    id: 6,
+    nome: "Fase 6 — Medidas e Conversões",
+    modulos: [
+      {
+        id: 11,
+        nome: "Módulo 11: SI e Sistema Métrico",
+        itens: [
+          { nome: "Prefixos SI", fonte: "Ferretto" },
+          { nome: "Unidades: comprimento, área, volume, massa, capacidade", fonte: "Ferretto" },
+          { nome: "Sistema monetário / tempo", fonte: "Livro" },
+          { nome: "Sistema de medidas (reforço)", fonte: "Livro" }
+        ]
+      },
+      {
+        id: 12,
+        nome: "Módulo 12: Medidas Geométricas",
+        itens: [
+          { nome: "Comprimento, área, volume", fonte: "Livro" },
+          { nome: "Elementos básicos de plana e espacial", fonte: "Livro" }
+        ]
+      }
+    ]
+  },
+  {
+    id: 7,
+    nome: "Fase 7 — Razão, Proporção e Regra de Três",
+    prioridadeBB: true,
+    modulos: [
+      {
+        id: 13,
+        nome: "Módulo 13: Razões e Proporções",
+        prioridadeBB: true,
+        itens: [
+          { nome: "Razão e proporção", fonte: "Ferretto" },
+          { nome: "Grandezas diretamente proporcionais", fonte: "Ferretto" },
+          { nome: "Grandezas inversamente proporcionais", fonte: "Ferretto" },
+          { nome: "Divisão proporcional direta", fonte: "Ferretto" },
+          { nome: "Divisão proporcional inversa", fonte: "Ferretto" },
+          { nome: "Divisão proporcional (reforço)", fonte: "Ferretto" }
+        ]
+      },
+      {
+        id: 14,
+        nome: "Módulo 14: Regra de Três",
+        prioridadeBB: true,
+        itens: [
+          { nome: "Regra de três simples direta", fonte: "Ferretto" },
+          { nome: "Regra de três simples inversa", fonte: "Ferretto" },
+          { nome: "Regra de três composta", fonte: "Ferretto" }
+        ]
+      },
+      {
+        id: 15,
+        nome: "Módulo 15: Escalas",
+        itens: [
+          { nome: "Escala", fonte: "Ferretto" },
+          { nome: "Escalas métricas", fonte: "Ferretto" }
+        ]
+      }
+    ]
+  },
+  {
+    id: 8,
+    nome: "Fase 8 — Porcentagem",
+    prioridadeBB: true,
+    modulos: [
+      {
+        id: 16,
+        nome: "Módulo 16: Porcentagem Completa",
+        prioridadeBB: true,
+        itens: [
+          { nome: "Porcentagem como fração", fonte: "Livro" },
+          { nome: "Porcentagem Parte 1", fonte: "Ferretto" },
+          { nome: "Porcentagem Parte 2", fonte: "Ferretto" },
+          { nome: "Porcentagem Parte 3", fonte: "Ferretto" },
+          { nome: "Aumentos e descontos", fonte: "Livro" },
+          { nome: "Porcentagens combinadas / sucessivas", fonte: "Livro" },
+          { nome: "Lucro, multa, juros como aplicação", fonte: "Livro" }
+        ]
+      }
+    ]
+  },
+  {
+    id: 9,
+    nome: "Fase 9 — Álgebra e Equações",
+    modulos: [
+      {
+        id: 17,
+        nome: "Módulo 17: Produtos Notáveis e Fatoração",
+        itens: [
+          { nome: "Produtos notáveis Parte 1", fonte: "Ferretto" },
+          { nome: "Produtos notáveis Parte 2", fonte: "Ferretto" },
+          { nome: "Fatoração: fator comum", fonte: "Ferretto" },
+          { nome: "Fatoração: diferença de quadrados", fonte: "Ferretto" },
+          { nome: "Fatoração: trinômio quadrado perfeito", fonte: "Ferretto" },
+          { nome: "Fatoração: trinômio do segundo grau", fonte: "Ferretto" }
+        ]
+      },
+      {
+        id: 18,
+        nome: "Módulo 18: Equações e Sistemas",
+        itens: [
+          { nome: "Noções sobre equações", fonte: "Livro" },
+          { nome: "Equação do 1º grau", fonte: "Ambos" },
+          { nome: "Problemas com equação 1º grau", fonte: "Livro" },
+          { nome: "Sistemas de equação 1º grau", fonte: "Livro" },
+          { nome: "Equação do 2º grau", fonte: "Ferretto" }
+        ]
+      }
+    ]
+  },
+  {
+    id: 10,
+    nome: "Fase 10 — Conjuntos",
+    modulos: [
+      {
+        id: 19,
+        nome: "Módulo 19: Teoria dos Conjuntos",
+        itens: [
+          { nome: "Conceitos e notação", fonte: "Livro" },
+          { nome: "Subconjuntos", fonte: "Livro" },
+          { nome: "Operações com conjuntos", fonte: "Livro" },
+          { nome: "Diagrama de Venn", fonte: "Livro" },
+          { nome: "Nº de elementos, nº de subconjuntos, conjunto das partes", fonte: "Livro" }
+        ]
+      }
+    ]
+  }
+];
+
+/* ============================================
+   ESTADO
+   ============================================ */
+let estado = {
+  itens: {},
+  historico: [],
+  metas: { questoes: 50, concluidos: 6, revisoes: 14 },
+  semana: { inicio: null, questoes: 0, concluidos: 0, revisoes: 0 }
+};
+
+/* ============================================
+   INICIALIZAÇÃO
+   ============================================ */
+function inicializar() {
+  carregarDados();
+  inicializarItens();
+  setupNavegacao();
+  setupFiltros();
+  renderizarTudo();
+  document.getElementById('filtro-vencidas').addEventListener('change', renderizarFilaRevisao);
+}
+
+function carregarDados() {
+  const dados = localStorage.getItem('mat-bb-v2');
+  if (dados) estado = JSON.parse(dados);
+  verificarSemana();
+}
+
+function salvarDados() {
+  localStorage.setItem('mat-bb-v2', JSON.stringify(estado));
+}
+
+function inicializarItens() {
+  let globalId = 0;
+  TRILHA.forEach(fase => {
+    fase.modulos.forEach(modulo => {
+      modulo.itens.forEach((item, idx) => {
+        const key = `item_${globalId}`;
+        if (!estado.itens[key]) {
+          estado.itens[key] = {
+            id: key,
+            faseId: fase.id,
+            faseNome: fase.nome,
+            moduloId: modulo.id,
+            moduloNome: modulo.nome,
+            ordem: globalId,
+            nome: item.nome,
+            fonte: item.fonte,
+            prioridadeBB: fase.prioridadeBB || modulo.prioridadeBB || false,
+            status: 'nao-iniciado',
+            dominio: 0,
+            questoesFeitas: 0,
+            acertos: 0,
+            erros: 0,
+            erroTipico: '',
+            updatedAt: null,
+            dueAt: null,
+            reviewCount: 0,
+            lastReviewedAt: null
+          };
+        } else {
+          estado.itens[key].faseNome = fase.nome;
+          estado.itens[key].moduloNome = modulo.nome;
+          estado.itens[key].nome = item.nome;
+          estado.itens[key].fonte = item.fonte;
+          estado.itens[key].prioridadeBB = fase.prioridadeBB || modulo.prioridadeBB || false;
+          estado.itens[key].ordem = globalId;
+        }
+        globalId++;
+      });
+    });
+  });
+  salvarDados();
+}
+
+function verificarSemana() {
+  const hoje = new Date();
+  const dia = hoje.getDay();
+  const diff = dia === 0 ? -6 : 1 - dia;
+  const inicio = new Date(hoje);
+  inicio.setDate(hoje.getDate() + diff);
+  inicio.setHours(0,0,0,0);
+  const inicioStr = inicio.toISOString().split('T')[0];
+  
+  if (estado.semana.inicio !== inicioStr) {
+    estado.semana = { inicio: inicioStr, questoes: 0, concluidos: 0, revisoes: 0 };
+    salvarDados();
+  }
+}
+
+/* ============================================
+   NAVEGAÇÃO
+   ============================================ */
+function setupNavegacao() {
+  document.querySelectorAll('nav button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const page = btn.dataset.page;
+      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(`page-${page}`).classList.add('active');
+      if (page === 'dashboard') renderizarDashboard();
+      if (page === 'trilha') renderizarTrilha();
+      if (page === 'exercicios') renderizarExercicios();
+      if (page === 'metas') renderizarMetas();
+    });
+  });
+}
+
+function setupFiltros() {
+  const selectFase = document.getElementById('filtro-fase');
+  TRILHA.forEach(f => {
+    const opt = document.createElement('option');
+    opt.value = f.id;
+    opt.textContent = f.nome;
+    selectFase.appendChild(opt);
+  });
+  
+  ['filtro-busca','filtro-fase','filtro-status','filtro-dominio','filtro-fonte','filtro-ordenar'].forEach(id => {
+    document.getElementById(id).addEventListener('input', renderizarTrilha);
+    document.getElementById(id).addEventListener('change', renderizarTrilha);
+  });
+}
+
+/* ============================================
+   RENDERIZAÇÃO GERAL
+   ============================================ */
+function renderizarTudo() {
+  renderizarDashboard();
+  renderizarTrilha();
+  renderizarExercicios();
+  renderizarMetas();
+}
+
+/* ============================================
+   DASHBOARD
+   ============================================ */
+function renderizarDashboard() {
+  renderizarStats();
+  renderizarFasesProgress();
+  renderizarFilaRevisao();
+  gerarHoje();
+}
+
+function renderizarStats() {
+  const itens = Object.values(estado.itens);
+  const total = itens.length;
+  const concluidos = itens.filter(i => i.status === 'concluido').length;
+  const emAndamento = itens.filter(i => i.status === 'em-andamento').length;
+  const revisar = itens.filter(i => i.status === 'revisar').length;
+  const dominioMedio = total > 0 ? (itens.reduce((a,i) => a + i.dominio, 0) / total).toFixed(1) : 0;
+  const totalQ = itens.reduce((a,i) => a + i.questoesFeitas, 0);
+  const totalA = itens.reduce((a,i) => a + i.acertos, 0);
+  const taxa = totalQ > 0 ? Math.round((totalA/totalQ)*100) : 0;
+  const progresso = total > 0 ? Math.round((concluidos/total)*100) : 0;
+  
+  document.getElementById('stats-grid').innerHTML = `
+    <div class="stat-card highlight">
+      <div class="stat-value" style="color:var(--accent-cyan);">${progresso}%</div>
+      <div class="stat-label">Progresso</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent-green);">${concluidos}</div>
+      <div class="stat-label">Concluídos</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent-blue);">${emAndamento}</div>
+      <div class="stat-label">Em andamento</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent-yellow);">${revisar}</div>
+      <div class="stat-label">Revisar</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:var(--accent-purple);">${dominioMedio}</div>
+      <div class="stat-label">Domínio médio</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">${totalQ}</div>
+      <div class="stat-label">Questões</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:${taxa>=70?'var(--accent-green)':'var(--accent-orange)'};">${taxa}%</div>
+      <div class="stat-label">Taxa acerto</div>
+    </div>
+  `;
+}
+
+function renderizarFasesProgress() {
+  const container = document.getElementById('fases-progress');
+  let html = '';
+  
+  TRILHA.forEach(fase => {
+    const itens = Object.values(estado.itens).filter(i => i.faseId === fase.id);
+    const total = itens.length;
+    const concluidos = itens.filter(i => i.status === 'concluido').length;
+    const dominioMedio = total > 0 ? (itens.reduce((a,i) => a + i.dominio, 0) / total).toFixed(1) : 0;
+    const pct = total > 0 ? Math.round((concluidos/total)*100) : 0;
+    const tag = fase.prioridadeBB ? ' <span style="color:var(--accent-yellow);font-size:0.6rem;">⭐BB</span>' : '';
+    
+    html += `
+      <div class="module-progress">
+        <div class="module-progress-header">
+          <strong>${fase.nome.split(' — ')[1] || fase.nome}${tag}</strong>
+          <span>${concluidos}/${total} • D${dominioMedio}</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill ${pct>=80?'green':pct>=40?'cyan':'yellow'}" style="width:${pct}%;"></div>
+        </div>
+      </div>
+    `;
+  });
+  
+  container.innerHTML = html;
+}
+
+function renderizarFilaRevisao() {
+  const container = document.getElementById('fila-revisao');
+  const apenasVencidas = document.getElementById('filtro-vencidas').checked;
+  const agora = new Date();
+  agora.setHours(0,0,0,0);
+  
+  let lista = Object.values(estado.itens)
+    .filter(i => i.dueAt)
+    .map(i => ({ ...i, dueDate: new Date(i.dueAt), vencida: new Date(i.dueAt) <= agora }));
+  
+  if (apenasVencidas) lista = lista.filter(i => i.vencida);
+  
+  lista.sort((a,b) => a.dueDate - b.dueDate);
+  lista = lista.slice(0, 10);
+  
+  if (lista.length === 0) {
+    container.innerHTML = '<p style="color:var(--text-muted);font-size:0.75rem;">Nenhuma revisão agendada.</p>';
+    return;
+  }
+  
+  let html = '';
+  lista.forEach(i => {
+    const dias = Math.ceil((i.dueDate - agora) / (1000*60*60*24));
+    const diasTxt = dias <= 0 ? '⚠️ Vencida!' : dias === 1 ? 'Amanhã' : `Em ${dias}d`;
+    
+    html += `
+      <div class="revisao-item ${i.vencida ? 'vencida' : ''}">
+        <span class="dominio-badge dominio-${i.dominio}">${i.dominio}</span>
+        <div class="info">
+          <div class="title">${i.nome}</div>
+          <div class="meta">${i.faseNome.split(' — ')[1] || ''} • ${diasTxt}</div>
+        </div>
+        <div class="actions">
+          <button class="btn btn-xs btn-secondary" onclick="abrirModal('${i.id}')">✏️</button>
+          <button class="btn btn-xs btn-success" onclick="concluirRevisao('${i.id}',7)" title="Feito (+7d)">✓7d</button>
+          <button class="btn btn-xs btn-warning" onclick="concluirRevisao('${i.id}',15)" title="Feito (+15d)">✓15d</button>
+        </div>
+      </div>
+    `;
+  });
+  
+  container.innerHTML = html;
+}
+
+function concluirRevisao(id, dias) {
+  const item = estado.itens[id];
+  if (!item) return;
+  
+  item.lastReviewedAt = new Date().toISOString();
+  item.reviewCount = (item.reviewCount || 0) + 1;
+  item.dueAt = new Date(Date.now() + dias * 24*60*60*1000).toISOString();
+  item.updatedAt = new Date().toISOString();
+  estado.semana.revisoes++;
+  
+  salvarDados();
+  renderizarDashboard();
+}
+
+/* ============================================
+   ALGORITMO "HOJE"
+   ============================================
+   
+   COMO AJUSTAR O ALGORITMO:
+   Modifique a função gerarHoje() abaixo.
+   
+   Lógica atual:
+   1) Revisões vencidas (máxima prioridade)
+   2) Se domínio médio da Fase 4 < 2:
+      - Prioriza itens da Fase 3 e 4 com domínio baixo
+   3) Se domínio médio da Fase 4 >= 2:
+      - Prioriza módulos 13-16 (prioridadeBB)
+   4) Fase 9 (álgebra) só entra com força se Fase 5 tiver domínio médio >= 2
+   5) Itens com muitos erros (taxa > 30%)
+   6) Próximos itens na trilha (ordem)
+*/
+function gerarHoje() {
+  const qtd = parseInt(document.getElementById('hoje-qtd').value) || 8;
+  const container = document.getElementById('lista-hoje');
+  const agora = new Date();
+  agora.setHours(0,0,0,0);
+  
+  const itens = Object.values(estado.itens);
+  
+  // Calcula domínio médio da Fase 4 (Frações/Decimais)
+  const itensFase4 = itens.filter(i => i.faseId === 4);
+  const dominioFase4 = itensFase4.length > 0 ? itensFase4.reduce((a,i) => a + i.dominio, 0) / itensFase4.length : 0;
+  
+  // Calcula domínio médio da Fase 5 (Potências/Raízes)
+  const itensFase5 = itens.filter(i => i.faseId === 5);
+  const dominioFase5 = itensFase5.length > 0 ? itensFase5.reduce((a,i) => a + i.dominio, 0) / itensFase5.length : 0;
+  
+  const pontuados = itens.map(i => {
+    let pontos = 0;
+    
+    // 1. Revisões vencidas (MÁXIMA)
+    if (i.dueAt && new Date(i.dueAt) <= agora) {
+      pontos += 2000;
+    }
+    
+    // 2. Status "revisar"
+    if (i.status === 'revisar') pontos += 150;
+    
+    // 3. Domínio baixo
+    if (i.dominio <= 1 && i.status !== 'concluido') {
+      // Se Fase 4 ainda fraca, prioriza Fase 3 e 4
+      if (dominioFase4 < 2 && (i.faseId === 3 || i.faseId === 4)) {
+        pontos += (4 - i.dominio) * 80;
+      } else if (dominioFase4 >= 2 && i.prioridadeBB) {
+        // Fase 4 OK, prioriza BB (módulos 13-16)
+        pontos += (4 - i.dominio) * 100;
+      } else {
+        pontos += (4 - i.dominio) * 40;
+      }
+    }
+    
+    // 4. Prioridade BB (quando Fase 4 >= 2)
+    if (dominioFase4 >= 2 && i.prioridadeBB && i.status !== 'concluido') {
+      pontos += 120;
+    }
+    
+    // 5. Fase 9 (álgebra) só com força se Fase 5 >= 2
+    if (i.faseId === 9) {
+      if (dominioFase5 < 2) {
+        pontos = Math.max(0, pontos - 50);
+      }
+    }
+    
+    // 6. Muitos erros
+    if (i.questoesFeitas >= 5 && i.erros > 0) {
+      const taxaErro = i.erros / i.questoesFeitas;
+      if (taxaErro > 0.3) pontos += taxaErro * 80;
+    }
+    
+    // 7. Em andamento
+    if (i.status === 'em-andamento') pontos += 30;
+    
+    // 8. Nunca praticado
+    if (i.questoesFeitas === 0 && i.status !== 'concluido') pontos += 15;
+    
+    // 9. Ordem da trilha (incentiva continuar)
+    pontos += Math.max(0, 10 - (i.ordem / 10));
+    
+    // Penaliza concluídos sem revisão
+    if (i.status === 'concluido' && !i.dueAt) pontos = 0;
+    
+    return { ...i, pontos };
+  })
+  .filter(i => i.pontos > 0)
+  .sort((a,b) => b.pontos - a.pontos)
+  .slice(0, qtd);
+  
+  if (pontuados.length === 0) {
+    container.innerHTML = '<p style="color:var(--text-muted);font-size:0.75rem;">🎉 Nenhuma tarefa pendente! Continue praticando.</p>';
+    return;
+  }
+  
+  let html = '';
+  pontuados.forEach((i, idx) => {
+    const isRevisao = i.dueAt && new Date(i.dueAt) <= agora;
+    const motivo = isRevisao ? '🔔 Revisão' 
+      : i.dominio <= 1 ? '📉 Domínio baixo'
+      : i.erros > i.questoesFeitas * 0.3 ? '❌ Erros'
+      : i.status === 'em-andamento' ? '🔄 Em andamento'
+      : i.questoesFeitas === 0 ? '🆕 Novo'
+      : i.prioridadeBB ? '⭐ Prioridade BB'
+      : '📚 Trilha';
+    
+    html += `
+      <div class="hoje-item">
+        <span style="font-weight:bold;color:var(--text-muted);min-width:20px;">${idx+1}.</span>
+        <span class="dominio-badge dominio-${i.dominio}">${i.dominio}</span>
+        <div class="info">
+          <div class="title">${i.nome}</div>
+          <div class="meta">${i.faseNome.split(' — ')[1] || ''} • ${motivo}</div>
+        </div>
+        <div class="actions">
+          <button class="btn btn-xs btn-secondary" onclick="abrirModal('${i.id}')">✏️</button>
+          <button class="btn btn-xs btn-success" onclick="marcarFeitoHoje('${i.id}')">✓</button>
+        </div>
+      </div>
+    `;
+  });
+  
+  container.innerHTML = html;
+}
+
+function marcarFeitoHoje(id) {
+  const item = estado.itens[id];
+  if (!item) return;
+  
+  if (item.status === 'nao-iniciado') item.status = 'em-andamento';
+  
+  if (item.dueAt && new Date(item.dueAt) <= new Date()) {
+    item.lastReviewedAt = new Date().toISOString();
+    item.reviewCount = (item.reviewCount || 0) + 1;
+    item.dueAt = null;
+    estado.semana.revisoes++;
+  }
+  
+  item.updatedAt = new Date().toISOString();
+  salvarDados();
+  renderizarDashboard();
+  
+  if (confirm(`"${item.nome}" marcado!\n\nAgendar revisão em 7 dias?`)) {
+    item.dueAt = new Date(Date.now() + 7*24*60*60*1000).toISOString();
+    salvarDados();
+    renderizarDashboard();
+  }
+}
+
+/* ============================================
+   TRILHA
+   ============================================ */
+function renderizarTrilha() {
+  const container = document.getElementById('trilha-lista');
+  const busca = document.getElementById('filtro-busca').value.toLowerCase();
+  const faseF = document.getElementById('filtro-fase').value;
+  const statusF = document.getElementById('filtro-status').value;
+  const dominioF = document.getElementById('filtro-dominio').value;
+  const fonteF = document.getElementById('filtro-fonte').value;
+  const ordenar = document.getElementById('filtro-ordenar').value;
+  
+  let html = '';
+  const agora = new Date();
+  
+  const fasesFiltradas = faseF ? TRILHA.filter(f => f.id === parseInt(faseF)) : TRILHA;
+  
+  fasesFiltradas.forEach(fase => {
+    const itensFase = Object.values(estado.itens).filter(i => i.faseId === fase.id);
+    const totalFase = itensFase.length;
+    const concluidosFase = itensFase.filter(i => i.status === 'concluido').length;
+    const dominioFase = totalFase > 0 ? (itensFase.reduce((a,i) => a+i.dominio,0)/totalFase).toFixed(1) : 0;
+    
+    html += `
+      <div class="fase-section">
+        <div class="fase-header" onclick="toggleFase(${fase.id})">
+          <h2>${fase.nome} ${fase.prioridadeBB ? '<span class="fase-badge">⭐ PRIORIDADE BB</span>' : ''}</h2>
+          <div class="fase-stats">
+            <span>${concluidosFase}/${totalFase}</span>
+            <span>D${dominioFase}</span>
+            <span id="fase-toggle-${fase.id}">▼</span>
+          </div>
+        </div>
+        <div class="fase-content" id="fase-content-${fase.id}">
+    `;
+    
+    fase.modulos.forEach(modulo => {
+      let itensModulo = Object.values(estado.itens).filter(i => i.moduloId === modulo.id);
+      
+      if (busca) itensModulo = itensModulo.filter(i => i.nome.toLowerCase().includes(busca));
+      if (statusF) itensModulo = itensModulo.filter(i => i.status === statusF);
+      if (dominioF !== '') itensModulo = itensModulo.filter(i => i.dominio === parseInt(dominioF));
+      if (fonteF) itensModulo = itensModulo.filter(i => i.fonte === fonteF);
+      
+      if (ordenar === 'dominio-menor') itensModulo.sort((a,b) => a.dominio - b.dominio);
+      else if (ordenar === 'mais-erros') itensModulo.sort((a,b) => (b.erros/(b.questoesFeitas||1)) - (a.erros/(a.questoesFeitas||1)));
+      else if (ordenar === 'revisoes-vencidas') {
+        itensModulo.sort((a,b) => {
+          const aV = a.dueAt && new Date(a.dueAt) <= agora ? 1 : 0;
+          const bV = b.dueAt && new Date(b.dueAt) <= agora ? 1 : 0;
+          return bV - aV;
+        });
+      } else {
+        itensModulo.sort((a,b) => a.ordem - b.ordem);
+      }
+      
+      if (itensModulo.length === 0 && (busca || statusF || dominioF || fonteF)) return;
+      
+      const totalMod = Object.values(estado.itens).filter(i => i.moduloId === modulo.id).length;
+      const concluidosMod = Object.values(estado.itens).filter(i => i.moduloId === modulo.id && i.status === 'concluido').length;
+      
+      html += `
+        <div class="modulo-section">
+          <div class="modulo-header ${modulo.prioridadeBB ? 'prioridade-alta' : ''}" onclick="toggleModulo(${modulo.id})">
+            <h3>${modulo.nome} ${modulo.prioridadeBB ? '<span class="mod-badge">BB</span>' : ''}</h3>
+            <div class="stats">
+              <span>${concluidosMod}/${totalMod}</span>
+              <span id="mod-toggle-${modulo.id}">▼</span>
+            </div>
+          </div>
+          <div class="modulo-content" id="mod-content-${modulo.id}">
+      `;
+      
+      itensModulo.forEach(i => {
+        const statusClass = i.status === 'concluido' ? 'concluido' : '';
+        const statusTag = {
+          'nao-iniciado': '<span class="tag tag-nao-iniciado">N/I</span>',
+          'em-andamento': '<span class="tag tag-em-andamento">Andamento</span>',
+          'revisar': '<span class="tag tag-revisar">Revisar</span>',
+          'concluido': '<span class="tag tag-concluido">OK</span>'
+        }[i.status];
+        
+        html += `
+          <div class="item-row ${statusClass}" onclick="abrirModal('${i.id}')">
+            <div class="checkbox"></div>
+            <div class="nome">${i.nome}</div>
+            <span class="fonte">${i.fonte}</span>
+            <div class="questoes">
+              <span class="ok">✓${i.acertos}</span>
+              <span class="err">✗${i.erros}</span>
+            </div>
+            <span class="dominio-badge dominio-${i.dominio}">${i.dominio}</span>
+            ${statusTag}
+          </div>
+        `;
+      });
+      
+      html += '</div></div>';
+    });
+    
+    html += '</div></div>';
+  });
+  
+  container.innerHTML = html || '<p style="color:var(--text-muted);">Nenhum item encontrado.</p>';
+}
+
+function toggleFase(id) {
+  const content = document.getElementById(`fase-content-${id}`);
+  const toggle = document.getElementById(`fase-toggle-${id}`);
+  if (content.classList.contains('open')) {
+    content.classList.remove('open');
+    toggle.textContent = '▼';
+  } else {
+    content.classList.add('open');
+    toggle.textContent = '▲';
+  }
+}
+
+function toggleModulo(id) {
+  const content = document.getElementById(`mod-content-${id}`);
+  const toggle = document.getElementById(`mod-toggle-${id}`);
+  if (content.classList.contains('open')) {
+    content.classList.remove('open');
+    toggle.textContent = '▼';
+  } else {
+    content.classList.add('open');
+    toggle.textContent = '▲';
+  }
+}
+
+/* ============================================
+   MODAL
+   ============================================ */
+function abrirModal(id) {
+  const item = estado.itens[id];
+  if (!item) return;
+  
+  document.getElementById('edit-id').value = id;
+  document.getElementById('modal-titulo').textContent = item.nome;
+  document.getElementById('edit-status').value = item.status;
+  document.getElementById('edit-dominio').value = item.dominio;
+  document.getElementById('edit-fonte').value = item.fonte;
+  document.getElementById('edit-erros').value = item.erroTipico || '';
+  
+  const warning = document.getElementById('prereq-warning');
+  if (item.prioridadeBB || item.faseId >= 7) {
+    const itensFase4 = Object.values(estado.itens).filter(i => i.faseId === 4);
+    const dominioFase4 = itensFase4.length > 0 ? itensFase4.reduce((a,i) => a+i.dominio,0)/itensFase4.length : 0;
+    if (dominioFase4 < 2) {
+      warning.innerHTML = `<strong>⚠️ Atenção:</strong> Domínio médio da Fase 4 (Frações/Decimais) está em ${dominioFase4.toFixed(1)}. Recomenda-se ≥2 antes de avançar.`;
+      warning.style.display = 'block';
+    } else {
+      warning.style.display = 'none';
+    }
+  } else {
+    warning.style.display = 'none';
+  }
+  
+  const dueInfo = document.getElementById('edit-due-info');
+  if (item.dueAt) {
+    dueInfo.textContent = `Revisão: ${new Date(item.dueAt).toLocaleDateString('pt-BR')} • ${item.reviewCount || 0} revisões`;
+  } else {
+    dueInfo.textContent = 'Sem revisão agendada';
+  }
+  
+  document.getElementById('modal-edit').classList.add('active');
+}
+
+function fecharModal() {
+  document.getElementById('modal-edit').classList.remove('active');
+}
+
+function salvarEdicao() {
+  const id = document.getElementById('edit-id').value;
+  const item = estado.itens[id];
+  if (!item) return;
+  
+  const statusAnterior = item.status;
+  
+  item.status = document.getElementById('edit-status').value;
+  item.dominio = parseInt(document.getElementById('edit-dominio').value);
+  item.fonte = document.getElementById('edit-fonte').value;
+  item.erroTipico = document.getElementById('edit-erros').value;
+  item.updatedAt = new Date().toISOString();
+  
+  if (statusAnterior !== 'concluido' && item.status === 'concluido') {
+    estado.semana.concluidos++;
+  }
+  
+  salvarDados();
+  fecharModal();
+  renderizarTudo();
+}
+
+function agendarRevisao(dias) {
+  const id = document.getElementById('edit-id').value;
+  const item = estado.itens[id];
+  if (!item) return;
+  
+  item.dueAt = new Date(Date.now() + dias * 24*60*60*1000).toISOString();
+  document.getElementById('edit-due-info').textContent = `Revisão: ${new Date(item.dueAt).toLocaleDateString('pt-BR')}`;
+  salvarDados();
+}
+
+function limparRevisao() {
+  const id = document.getElementById('edit-id').value;
+  const item = estado.itens[id];
+  if (!item) return;
+  item.dueAt = null;
+  document.getElementById('edit-due-info').textContent = 'Sem revisão agendada';
+  salvarDados();
+}
+
+document.getElementById('modal-edit').addEventListener('click', function(e) {
+  if (e.target === this) fecharModal();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') fecharModal();
+});
+
+/* ============================================
+   EXERCÍCIOS
+   ============================================ */
+function renderizarExercicios() {
+  const select = document.getElementById('ex-item');
+  const current = select.value;
+  select.innerHTML = '<option value="">Selecione...</option>';
+  
+  TRILHA.forEach(fase => {
+    const optgroup = document.createElement('optgroup');
+    optgroup.label = fase.nome;
+    Object.values(estado.itens)
+      .filter(i => i.faseId === fase.id)
+      .sort((a,b) => a.ordem - b.ordem)
+      .forEach(i => {
+        const opt = document.createElement('option');
+        opt.value = i.id;
+        opt.textContent = i.nome;
+        optgroup.appendChild(opt);
+      });
+    select.appendChild(optgroup);
+  });
+  
+  if (current) select.value = current;
+  
+  const container = document.getElementById('historico-lista');
+  const hist = estado.historico.slice(-15).reverse();
+  
+  if (hist.length === 0) {
+    container.innerHTML = '<p style="color:var(--text-muted);font-size:0.75rem;">Nenhum registro.</p>';
+    return;
+  }
+  
+  let html = '';
+  hist.forEach(h => {
+    const item = estado.itens[h.itemId];
+    const nome = item ? item.nome : 'Desconhecido';
+    const data = new Date(h.data).toLocaleDateString('pt-BR');
+    
+    html += `
+      <div class="historico-item">
+        <div class="data">${data}</div>
+        <div>
+          <strong style="font-size:0.75rem;">${nome}</strong>
+          ${h.erro ? `<div style="font-size:0.65rem;color:var(--text-muted);">${h.erro}</div>` : ''}
+        </div>
+        <div class="resultado">
+          <span style="color:var(--accent-green);">✓${h.acertos}</span>
+          <span style="color:var(--accent-red);">✗${h.erros}</span>
+          <span style="color:var(--text-muted);">(${h.feitas})</span>
+        </div>
+      </div>
+    `;
+  });
+  
+  container.innerHTML = html;
+}
+
+function registrarExercicio() {
+  const itemId = document.getElementById('ex-item').value;
+  if (!itemId) { alert('Selecione um item!'); return; }
+  
+  const feitas = parseInt(document.getElementById('ex-feitas').value) || 0;
+  const acertos = parseInt(document.getElementById('ex-acertos').value) || 0;
+  const erros = parseInt(document.getElementById('ex-erros').value) || 0;
+  const erro = document.getElementById('ex-erro').value.trim();
+  
+  const item = estado.itens[itemId];
+  if (!item) return;
+  
+  item.questoesFeitas += feitas;
+  item.acertos += acertos;
+  item.erros += erros;
+  if (erro && !item.erroTipico.includes(erro)) {
+    item.erroTipico = item.erroTipico ? item.erroTipico + '; ' + erro : erro;
+  }
+  if (item.status === 'nao-iniciado') item.status = 'em-andamento';
+  item.updatedAt = new Date().toISOString();
+  
+  estado.historico.push({ itemId, data: new Date().toISOString(), feitas, acertos, erros, erro });
+  estado.semana.questoes += feitas;
+  
+  salvarDados();
+  
+  document.getElementById('ex-feitas').value = 10;
+  document.getElementById('ex-acertos').value = 0;
+  document.getElementById('ex-erros').value = 0;
+  document.getElementById('ex-erro').value = '';
+  
+  renderizarExercicios();
+  renderizarDashboard();
+  alert('Registrado!');
+}
+
+/* ============================================
+   METAS
+   ============================================ */
+function renderizarMetas() {
+  const hoje = new Date();
+  const dia = hoje.getDay();
+  const diff = dia === 0 ? -6 : 1 - dia;
+  const inicio = new Date(hoje);
+  inicio.setDate(hoje.getDate() + diff);
+  const fim = new Date(inicio);
+  fim.setDate(inicio.getDate() + 6);
+  
+  const fmt = d => d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+  document.getElementById('semana-info').innerHTML = `
+    <span>📅 Semana: ${fmt(inicio)} a ${fmt(fim)}</span>
+    <span>${['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'][hoje.getDay()]}</span>
+  `;
+  
+  document.getElementById('meta-questoes').value = estado.metas.questoes;
+  document.getElementById('meta-concluidos').value = estado.metas.concluidos;
+  document.getElementById('meta-revisoes').value = estado.metas.revisoes;
+  
+  document.getElementById('meta-q-label').textContent = estado.metas.questoes;
+  document.getElementById('meta-c-label').textContent = estado.metas.concluidos;
+  document.getElementById('meta-r-label').textContent = estado.metas.revisoes;
+  
+  document.getElementById('val-questoes').textContent = estado.semana.questoes;
+  document.getElementById('val-concluidos').textContent = estado.semana.concluidos;
+  document.getElementById('val-revisoes').textContent = estado.semana.revisoes;
+  
+  const pQ = Math.min(100, Math.round((estado.semana.questoes / estado.metas.questoes) * 100));
+  const pC = Math.min(100, Math.round((estado.semana.concluidos / estado.metas.concluidos) * 100));
+  const pR = Math.min(100, Math.round((estado.semana.revisoes / estado.metas.revisoes) * 100));
+  
+  document.getElementById('prog-questoes').style.width = pQ + '%';
+  document.getElementById('prog-concluidos').style.width = pC + '%';
+  document.getElementById('prog-revisoes').style.width = pR + '%';
+}
+
+function salvarMetas() {
+  estado.metas.questoes = parseInt(document.getElementById('meta-questoes').value) || 50;
+  estado.metas.concluidos = parseInt(document.getElementById('meta-concluidos').value) || 6;
+  estado.metas.revisoes = parseInt(document.getElementById('meta-revisoes').value) || 14;
+  salvarDados();
+  renderizarMetas();
+  alert('Metas salvas!');
+}
+
+function autoMetas(tempo) {
+  const tabela = {
+    30: { q: 25, c: 4, r: 8 },
+    60: { q: 50, c: 6, r: 14 },
+    90: { q: 80, c: 8, r: 18 },
+    120: { q: 110, c: 10, r: 22 }
+  };
+  
+  const m = tabela[tempo] || tabela[60];
+  
+  const itens = Object.values(estado.itens);
+  const dominioMedio = itens.length > 0 ? itens.reduce((a,i) => a+i.dominio,0)/itens.length : 0;
+  
+  if (dominioMedio < 2) {
+    m.q = Math.round(m.q * 1.2);
+    m.r = Math.round(m.r * 1.3);
+  }
+  
+  document.getElementById('meta-questoes').value = m.q;
+  document.getElementById('meta-concluidos').value = m.c;
+  document.getElementById('meta-revisoes').value = m.r;
+  
+  alert(`Metas sugeridas para ${tempo} min/dia:\n• ${m.q} questões\n• ${m.c} concluídos\n• ${m.r} revisões\n\nClique em "Salvar Metas" para confirmar.`);
+}
+
+/* ============================================
+   BACKUP
+   ============================================ */
+function exportarDados() {
+  const dados = JSON.stringify(estado, null, 2);
+  const blob = new Blob([dados], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `mat-bb-backup-${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importarDados(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const dados = JSON.parse(e.target.result);
+      if (!dados.itens) throw new Error('Inválido');
+      if (confirm('Substituir todos os dados atuais?')) {
+        estado = dados;
+        salvarDados();
+        inicializarItens();
+        renderizarTudo();
+        alert('Importado!');
+      }
+    } catch (err) {
+      alert('Erro: arquivo inválido.');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function resetarDados() {
+  if (prompt('Digite "RESETAR" para confirmar:') === 'RESETAR') {
+    localStorage.removeItem('mat-bb-v2');
+    estado = {
+      itens: {},
+      historico: [],
+      metas: { questoes: 50, concluidos: 6, revisoes: 14 },
+      semana: { inicio: null, questoes: 0, concluidos: 0, revisoes: 0 }
+    };
+    inicializarItens();
+    renderizarTudo();
+    alert('Resetado!');
+  }
+}
+
+/* ============================================
+   INICIALIZA
+   ============================================ */
+document.addEventListener('DOMContentLoaded', inicializar);
+</script>
+
+</body>
+</html>
