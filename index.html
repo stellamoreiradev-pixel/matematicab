@@ -3,56 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matemática: Domínio Total</title>
+<title>Matemática — Domínio Total</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================
-   VARIÁVEIS E RESET
+   DESIGN SYSTEM — TEMA CLARO EDUCACIONAL
    ============================================ */
 :root {
-  --bg-primary: #0a0e14;
-  --bg-secondary: #12181f;
-  --bg-tertiary: #1a222c;
-  --bg-card: #151c25;
-  --border: #2a3544;
-  --border-light: #3a4555;
-  --text-primary: #e8edf4;
-  --text-secondary: #9aa5b4;
-  --text-muted: #6b7785;
-  --accent-blue: #4fa3f7;
-  --accent-green: #4ade80;
-  --accent-yellow: #facc15;
-  --accent-orange: #fb923c;
-  --accent-red: #f87171;
-  --accent-purple: #a78bfa;
-  --accent-pink: #f472b6;
-  --accent-cyan: #22d3ee;
-  --shadow: 0 4px 20px rgba(0,0,0,0.3);
-  --radius: 10px;
-  --radius-sm: 6px;
-  --transition: 0.15s ease;
+  /* Cores principais */
+  --primary: #6366F1;
+  --primary-light: #818CF8;
+  --primary-lighter: #E0E7FF;
+  --primary-dark: #4F46E5;
+  
+  --secondary: #10B981;
+  --secondary-light: #34D399;
+  --secondary-lighter: #D1FAE5;
+  
+  --accent: #F59E0B;
+  --accent-light: #FCD34D;
+  --accent-lighter: #FEF3C7;
+  
+  --danger: #EF4444;
+  --danger-light: #FCA5A5;
+  --danger-lighter: #FEE2E2;
+  
+  /* Neutros */
+  --bg-page: #F9FAFB;
+  --bg-card: #FFFFFF;
+  --bg-subtle: #F3F4F6;
+  --bg-hover: #F9FAFB;
+  
+  --border: #E5E7EB;
+  --border-light: #F3F4F6;
+  
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+  --text-muted: #9CA3AF;
+  --text-inverse: #FFFFFF;
+  
+  /* Sombras */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  
+  /* Espaçamento */
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-full: 9999px;
+  
+  --transition: 0.2s ease;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* ============================================
+   RESET & BASE
+   ============================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: var(--bg-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-page);
   color: var(--text-primary);
-  line-height: 1.5;
+  line-height: 1.6;
   min-height: 100vh;
-  font-size: 14px;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ============================================
    LAYOUT
    ============================================ */
-.app { display: flex; flex-direction: column; min-height: 100vh; }
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
 header {
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  background: var(--bg-card);
   border-bottom: 1px solid var(--border);
-  padding: 0.75rem 1rem;
+  padding: 1rem 1.5rem;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -64,467 +99,815 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.75rem;
 }
 
 .logo-icon {
-  width: 36px;
-  height: 36px;
-  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #000;
-}
-
-.logo h1 {
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: white;
 }
 
-.logo span {
-  font-size: 0.65rem;
+.logo-text h1 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.logo-text span {
+  font-size: 0.75rem;
   color: var(--text-muted);
-  display: block;
+  font-weight: 500;
 }
 
-nav { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+nav {
+  display: flex;
+  gap: 0.5rem;
+  background: var(--bg-subtle);
+  padding: 0.375rem;
+  border-radius: var(--radius-sm);
+}
 
 nav button {
   background: transparent;
-  border: 1px solid var(--border);
+  border: none;
   color: var(--text-secondary);
-  padding: 0.4rem 0.8rem;
-  border-radius: var(--radius-sm);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   font-weight: 500;
   transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-nav button:hover { background: var(--bg-tertiary); color: var(--text-primary); }
-nav button.active { background: var(--accent-blue); border-color: var(--accent-blue); color: #000; font-weight: 600; }
+nav button:hover {
+  color: var(--text-primary);
+  background: var(--bg-card);
+}
+
+nav button.active {
+  background: var(--bg-card);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
 
 main {
   flex: 1;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 2rem 1.5rem;
   width: 100%;
 }
 
 /* ============================================
-   COMPONENTES
+   CARDS
    ============================================ */
 .card {
   background: var(--bg-card);
-  border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 1rem;
-  margin-bottom: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-light);
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .card-title {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 600;
+  color: var(--text-primary);
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
+.card-title .icon {
+  font-size: 1.25rem;
+}
+
+.card-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
-  padding: 0.4rem 0.75rem;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
   border-radius: var(--radius-sm);
   border: none;
   cursor: pointer;
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.875rem;
+  font-weight: 500;
   transition: var(--transition);
-  white-space: nowrap;
+  font-family: inherit;
 }
 
-.btn-primary { background: var(--accent-blue); color: #000; }
-.btn-primary:hover { filter: brightness(1.1); }
-.btn-secondary { background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border); }
-.btn-secondary:hover { background: var(--border); }
-.btn-success { background: var(--accent-green); color: #000; }
-.btn-warning { background: var(--accent-yellow); color: #000; }
-.btn-danger { background: var(--accent-red); color: #000; }
-.btn-sm { padding: 0.25rem 0.5rem; font-size: 0.7rem; }
-.btn-xs { padding: 0.2rem 0.4rem; font-size: 0.65rem; }
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
 
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-hover);
+  border-color: var(--text-muted);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.btn-ghost:hover {
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+}
+
+.btn-success {
+  background: var(--secondary);
+  color: white;
+}
+
+.btn-success:hover {
+  background: #059669;
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+
+.btn-sm {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+}
+
+.btn-xs {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+/* ============================================
+   TAGS & BADGES
+   ============================================ */
 .tag {
-  display: inline-block;
-  padding: 0.15rem 0.5rem;
-  border-radius: 50px;
-  font-size: 0.65rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
-.tag-nao-iniciado { background: rgba(107,119,133,0.2); color: var(--text-muted); }
-.tag-em-andamento { background: rgba(79,163,247,0.2); color: var(--accent-blue); }
-.tag-revisar { background: rgba(250,204,21,0.2); color: var(--accent-yellow); }
-.tag-concluido { background: rgba(74,222,128,0.2); color: var(--accent-green); }
+.tag-default { background: var(--bg-subtle); color: var(--text-secondary); }
+.tag-primary { background: var(--primary-lighter); color: var(--primary); }
+.tag-success { background: var(--secondary-lighter); color: #047857; }
+.tag-warning { background: var(--accent-lighter); color: #B45309; }
+.tag-danger { background: var(--danger-lighter); color: var(--danger); }
 
 .dominio-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  font-size: 0.7rem;
-  font-weight: 700;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: 600;
 }
 
-.dominio-0 { background: rgba(248,113,113,0.2); color: var(--accent-red); }
-.dominio-1 { background: rgba(251,146,60,0.2); color: var(--accent-orange); }
-.dominio-2 { background: rgba(250,204,21,0.2); color: var(--accent-yellow); }
-.dominio-3 { background: rgba(79,163,247,0.2); color: var(--accent-blue); }
-.dominio-4 { background: rgba(74,222,128,0.2); color: var(--accent-green); }
+.dominio-0 { background: var(--danger-lighter); color: var(--danger); }
+.dominio-1 { background: #FFEDD5; color: #C2410C; }
+.dominio-2 { background: var(--accent-lighter); color: #B45309; }
+.dominio-3 { background: var(--primary-lighter); color: var(--primary); }
+.dominio-4 { background: var(--secondary-lighter); color: #047857; }
 
+/* ============================================
+   PROGRESS BAR
+   ============================================ */
 .progress-bar {
-  height: 6px;
-  background: var(--bg-tertiary);
-  border-radius: 50px;
+  height: 8px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-full);
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  border-radius: 50px;
+  border-radius: var(--radius-full);
   transition: width 0.4s ease;
 }
 
-.progress-fill.green { background: linear-gradient(90deg, var(--accent-green), #22c55e); }
-.progress-fill.blue { background: linear-gradient(90deg, var(--accent-blue), #3b82f6); }
-.progress-fill.yellow { background: linear-gradient(90deg, var(--accent-yellow), #eab308); }
-.progress-fill.red { background: linear-gradient(90deg, var(--accent-red), #ef4444); }
-.progress-fill.cyan { background: linear-gradient(90deg, var(--accent-cyan), #06b6d4); }
+.progress-fill.primary { background: linear-gradient(90deg, var(--primary), var(--primary-light)); }
+.progress-fill.success { background: linear-gradient(90deg, var(--secondary), var(--secondary-light)); }
+.progress-fill.warning { background: linear-gradient(90deg, var(--accent), var(--accent-light)); }
 
+/* ============================================
+   FORMS
+   ============================================ */
 input, select, textarea {
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border);
-  color: var(--text-primary);
-  padding: 0.5rem 0.6rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.8rem;
   width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  font-family: inherit;
   transition: var(--transition);
 }
 
 input:focus, select:focus, textarea:focus {
   outline: none;
-  border-color: var(--accent-blue);
-  box-shadow: 0 0 0 2px rgba(79,163,247,0.15);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-lighter);
 }
 
 label {
   display: block;
-  font-size: 0.7rem;
-  color: var(--text-secondary);
-  margin-bottom: 0.3rem;
+  font-size: 0.875rem;
   font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
 }
 
-.form-group { margin-bottom: 0.75rem; }
-.form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.75rem; }
+.form-group { margin-bottom: 1.25rem; }
+.form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }
 
 /* ============================================
-   DASHBOARD
+   WELCOME BANNER
    ============================================ */
-.quick-help {
-  background: linear-gradient(135deg, rgba(34,211,238,0.08) 0%, rgba(79,163,247,0.05) 100%);
-  border: 1px solid rgba(34,211,238,0.25);
+.welcome-banner {
+  background: linear-gradient(135deg, var(--primary-lighter), #F5F3FF);
+  border: 1px solid #C7D2FE;
   border-radius: var(--radius);
-  padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
 }
 
-.quick-help h3 { font-size: 0.85rem; color: var(--accent-cyan); margin-bottom: 0.35rem; }
-.quick-help p { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; }
+.welcome-banner h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
 
+.welcome-banner p {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ============================================
+   STATS GRID
+   ============================================ */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .stat-card {
   background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 0.6rem;
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-light);
   text-align: center;
 }
 
-.stat-value { font-size: 1.4rem; font-weight: 700; line-height: 1.1; }
-.stat-label { font-size: 0.65rem; color: var(--text-muted); margin-top: 0.2rem; }
-.stat-card.highlight { background: linear-gradient(135deg, rgba(34,211,238,0.1) 0%, rgba(79,163,247,0.05) 100%); border-color: var(--accent-cyan); }
+.stat-card.featured {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border: none;
+}
 
+.stat-card.featured .stat-value,
+.stat-card.featured .stat-label { color: white; }
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin-top: 0.375rem;
+  font-weight: 500;
+}
+
+/* ============================================
+   DASHBOARD GRID
+   ============================================ */
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
 }
 
-.module-progress { margin-bottom: 0.5rem; }
-.module-progress-header { display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 0.25rem; }
-.module-progress-header strong { color: var(--text-primary); }
-.module-progress-header span { color: var(--text-muted); }
+/* ============================================
+   FASE/MODULE PROGRESS
+   ============================================ */
+.fase-progress {
+  margin-bottom: 1rem;
+}
 
-.revisao-item, .hoje-item {
+.fase-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.fase-progress-header strong {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem;
-  background: var(--bg-tertiary);
+}
+
+.fase-progress-header span {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.priority-badge {
+  background: var(--accent-lighter);
+  color: #B45309;
+  font-size: 0.6875rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+}
+
+/* ============================================
+   REVIEW QUEUE
+   ============================================ */
+.review-info {
+  background: var(--bg-subtle);
   border-radius: var(--radius-sm);
-  margin-bottom: 0.35rem;
-  border-left: 3px solid var(--accent-yellow);
-  font-size: 0.8rem;
+  padding: 0.875rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  border-left: 3px solid var(--primary);
 }
 
-.revisao-item.vencida { border-left-color: var(--accent-red); background: rgba(248,113,113,0.05); }
-.hoje-item { border-left-color: var(--accent-cyan); }
-
-.revisao-item .info, .hoje-item .info { flex: 1; min-width: 0; }
-.revisao-item .title, .hoje-item .title { font-size: 0.75rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.revisao-item .meta, .hoje-item .meta { font-size: 0.6rem; color: var(--text-muted); }
-.revisao-item .actions, .hoje-item .actions { display: flex; gap: 0.25rem; flex-shrink: 0; }
-
-.hoje-config {
+.review-item, .today-item {
   display: flex;
-  gap: 0.5rem;
   align-items: center;
+  gap: 0.875rem;
+  padding: 1rem;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.625rem;
+  transition: var(--transition);
+}
+
+.review-item:hover, .today-item:hover {
+  background: var(--bg-hover);
+  box-shadow: var(--shadow-sm);
+}
+
+.review-item.overdue {
+  background: var(--danger-lighter);
+  border-left: 3px solid var(--danger);
+}
+
+.today-item {
+  border-left: 3px solid var(--primary);
+}
+
+.review-item .info, .today-item .info {
+  flex: 1;
+  min-width: 0;
+}
+
+.review-item .title, .today-item .title {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.review-item .meta, .today-item .meta {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.review-item .actions, .today-item .actions {
+  display: flex;
+  gap: 0.375rem;
+}
+
+/* ============================================
+   TODAY CONFIG
+   ============================================ */
+.today-config {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   flex-wrap: wrap;
 }
 
-.hoje-config label { margin: 0; font-size: 0.7rem; }
-.hoje-config select, .hoje-config input { width: 70px; padding: 0.3rem; }
+.today-config select {
+  width: auto;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
 
 /* ============================================
-   TRILHA
+   FILTERS BAR
    ============================================ */
 .filters-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  padding: 0.75rem;
+  gap: 0.75rem;
+  padding: 1rem;
   background: var(--bg-card);
   border-radius: var(--radius);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-light);
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
 }
 
-.filters-bar input, .filters-bar select { width: auto; min-width: 120px; flex: 1; }
-.filters-bar .search-input { min-width: 180px; }
+.filters-bar input, .filters-bar select {
+  flex: 1;
+  min-width: 150px;
+  padding: 0.625rem 1rem;
+}
 
-.fase-section { margin-bottom: 1.25rem; }
+.filters-bar .search-input {
+  min-width: 200px;
+}
+
+/* ============================================
+   TRILHA (TRACK)
+   ============================================ */
+.fase-section {
+  margin-bottom: 1.5rem;
+}
 
 .fase-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.6rem 0.8rem;
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius);
   cursor: pointer;
-  margin-bottom: 0.5rem;
+  transition: var(--transition);
+  margin-bottom: 0.75rem;
 }
 
-.fase-header h2 { font-size: 0.85rem; color: var(--accent-cyan); display: flex; align-items: center; gap: 0.5rem; }
-.fase-header .fase-stats { font-size: 0.7rem; color: var(--text-muted); display: flex; gap: 1rem; }
-.fase-header .fase-badge { font-size: 0.6rem; background: var(--accent-yellow); color: #000; padding: 0.1rem 0.4rem; border-radius: 50px; }
+.fase-header:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-lighter);
+}
 
-.fase-content { display: none; padding-left: 0.5rem; }
-.fase-content.open { display: block; }
+.fase-header.priority {
+  border-left: 4px solid var(--accent);
+}
 
-.modulo-section { margin-bottom: 0.75rem; margin-left: 0.5rem; }
+.fase-header h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.fase-header .stats {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.fase-header .toggle-icon {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.fase-content {
+  display: none;
+  padding-left: 1rem;
+}
+
+.fase-content.open {
+  display: block;
+}
+
+.modulo-section {
+  margin-bottom: 0.75rem;
+}
 
 .modulo-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0.7rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
+  padding: 0.875rem 1rem;
+  background: var(--bg-subtle);
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: var(--transition);
 }
 
-.modulo-header:hover { background: var(--bg-tertiary); }
-.modulo-header.prioridade-alta { border-left: 3px solid var(--accent-yellow); }
-.modulo-header h3 { font-size: 0.8rem; display: flex; align-items: center; gap: 0.4rem; }
-.modulo-header .mod-badge { font-size: 0.55rem; background: var(--accent-orange); color: #000; padding: 0.1rem 0.35rem; border-radius: 50px; }
-.modulo-header .stats { display: flex; gap: 0.75rem; font-size: 0.65rem; color: var(--text-muted); }
+.modulo-header:hover {
+  background: var(--bg-hover);
+}
 
-.modulo-content { display: none; padding: 0.4rem 0 0.4rem 1rem; }
-.modulo-content.open { display: block; }
+.modulo-header h4 {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.modulo-content {
+  display: none;
+  padding: 0.5rem 0 0.5rem 1rem;
+}
+
+.modulo-content.open {
+  display: block;
+}
 
 .item-row {
   display: grid;
   grid-template-columns: auto 1fr auto auto auto auto;
-  gap: 0.5rem;
+  gap: 0.75rem;
   align-items: center;
-  padding: 0.45rem 0.6rem;
-  background: var(--bg-tertiary);
+  padding: 0.875rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
-  margin-bottom: 0.25rem;
-  border: 1px solid transparent;
-  transition: var(--transition);
+  margin-bottom: 0.5rem;
   cursor: pointer;
-  font-size: 0.75rem;
+  transition: var(--transition);
 }
 
-.item-row:hover { border-color: var(--border-light); background: var(--border); }
+.item-row:hover {
+  border-color: var(--primary-lighter);
+  box-shadow: var(--shadow-sm);
+}
 
 .item-row .checkbox {
-  width: 18px;
-  height: 18px;
-  border: 2px solid var(--border-light);
-  border-radius: 3px;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.65rem;
   transition: var(--transition);
 }
 
-.item-row.concluido .checkbox { background: var(--accent-green); border-color: var(--accent-green); color: #000; }
-.item-row.concluido .checkbox::after { content: '✓'; }
+.item-row.done .checkbox {
+  background: var(--secondary);
+  border-color: var(--secondary);
+  color: white;
+}
 
-.item-row .nome { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.item-row .fonte { font-size: 0.55rem; color: var(--text-muted); background: var(--bg-secondary); padding: 0.1rem 0.3rem; border-radius: 3px; }
-.item-row .questoes { font-size: 0.6rem; color: var(--text-muted); display: flex; gap: 0.3rem; }
-.item-row .questoes .ok { color: var(--accent-green); }
-.item-row .questoes .err { color: var(--accent-red); }
-
-/* ============================================
-   EXERCÍCIOS
-   ============================================ */
-.ex-form { max-width: 550px; }
-
-.historico-item {
-  display: grid;
-  grid-template-columns: 70px 1fr auto;
-  gap: 0.75rem;
-  align-items: center;
-  padding: 0.5rem;
-  background: var(--bg-card);
-  border-radius: var(--radius-sm);
-  margin-bottom: 0.35rem;
-  border: 1px solid var(--border);
+.item-row.done .checkbox::after {
+  content: '✓';
   font-size: 0.75rem;
+  font-weight: bold;
 }
 
-.historico-item .data { font-size: 0.65rem; color: var(--text-muted); }
-.historico-item .resultado { display: flex; gap: 0.4rem; font-size: 0.7rem; }
+.item-row .nome {
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-row .fonte {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: var(--bg-subtle);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.item-row .questoes {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.item-row .questoes .ok { color: var(--secondary); }
+.item-row .questoes .err { color: var(--danger); }
 
 /* ============================================
-   METAS
+   EXERCISES
    ============================================ */
-.metas-grid {
+.exercise-form {
+  max-width: 560px;
+}
+
+.history-item {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.meta-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  grid-template-columns: 80px 1fr auto;
+  gap: 1rem;
+  align-items: center;
   padding: 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.625rem;
 }
 
-.meta-card h4 { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.5rem; }
-.meta-card .valor { font-size: 1.6rem; font-weight: 700; }
-.meta-card .meta-info { font-size: 0.65rem; color: var(--text-muted); margin-top: 0.3rem; }
-.meta-card .progress-bar { margin-top: 0.5rem; }
-.meta-card input { margin-bottom: 0.5rem; }
+.history-item .date {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
 
-.semana-info {
-  background: var(--bg-secondary);
+.history-item .result {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* ============================================
+   GOALS
+   ============================================ */
+.week-info {
+  background: var(--bg-subtle);
   border-radius: var(--radius);
-  padding: 0.75rem;
-  margin-bottom: 1rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  font-size: 0.8rem;
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
 }
 
-.auto-metas {
+.goals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.goal-card {
   background: var(--bg-card);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-light);
   border-radius: var(--radius);
-  padding: 1rem;
-  margin-top: 1rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
 }
 
-.auto-metas h4 { font-size: 0.8rem; margin-bottom: 0.5rem; }
-.auto-metas p { font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
-.auto-metas .tempo-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.goal-card h4 {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.goal-card .value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.goal-card .meta-info {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin-top: 0.375rem;
+}
+
+.goal-card .progress-bar {
+  margin-top: 0.75rem;
+}
+
+.auto-goals {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.auto-goals h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.auto-goals p {
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.time-buttons {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
 
 /* ============================================
    BACKUP
    ============================================ */
-.backup-section { max-width: 550px; }
-.backup-buttons { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
-
-.danger-zone {
-  background: rgba(248,113,113,0.05);
-  border: 1px solid rgba(248,113,113,0.25);
-  border-radius: var(--radius);
-  padding: 1rem;
-  margin-top: 1.5rem;
+.backup-section {
+  max-width: 560px;
 }
 
-.danger-zone h3 { color: var(--accent-red); font-size: 0.85rem; margin-bottom: 0.35rem; }
-.danger-zone p { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+.backup-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.danger-zone {
+  background: var(--danger-lighter);
+  border: 1px solid var(--danger-light);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.danger-zone h3 {
+  color: var(--danger);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.danger-zone p {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
 
 /* ============================================
    MODAL
    ============================================ */
 .modal-overlay {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.75);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(17, 24, 39, 0.5);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -535,72 +918,155 @@ label {
   transition: var(--transition);
 }
 
-.modal-overlay.active { opacity: 1; visibility: visible; }
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
 
 .modal {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  background: var(--bg-card);
   border-radius: var(--radius);
   width: 100%;
   max-width: 480px;
   max-height: 90vh;
   overflow-y: auto;
-  transform: translateY(15px);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(20px) scale(0.95);
   transition: var(--transition);
 }
 
-.modal-overlay.active .modal { transform: translateY(0); }
+.modal-overlay.active .modal {
+  transform: translateY(0) scale(1);
+}
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 1rem;
+  padding: 1.25rem 1.5rem;
   border-bottom: 1px solid var(--border);
 }
 
-.modal-header h3 { font-size: 0.9rem; }
-.modal-close { background: none; border: none; color: var(--text-muted); font-size: 1.3rem; cursor: pointer; line-height: 1; }
-.modal-close:hover { color: var(--text-primary); }
-.modal-body { padding: 1rem; }
-.modal-footer { display: flex; justify-content: flex-end; gap: 0.5rem; padding: 0.75rem 1rem; border-top: 1px solid var(--border); }
-
-.review-btns { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.5rem; }
-
-/* ============================================
-   RESPONSIVO
-   ============================================ */
-@media (max-width: 768px) {
-  .header-content { flex-direction: column; align-items: flex-start; }
-  nav { width: 100%; overflow-x: auto; }
-  nav button { flex-shrink: 0; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
-  .item-row { grid-template-columns: auto 1fr auto; }
-  .item-row .questoes, .item-row .fonte { display: none; }
-  .filters-bar { flex-direction: column; }
-  .filters-bar input, .filters-bar select { width: 100%; }
+.modal-header h3 {
+  font-size: 1.0625rem;
+  font-weight: 600;
 }
 
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.25rem;
+  border-radius: 6px;
+  transition: var(--transition);
+}
+
+.modal-close:hover {
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+  background: var(--bg-subtle);
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.prereq-alert {
+  background: var(--accent-lighter);
+  border: 1px solid var(--accent-light);
+  border-radius: var(--radius-sm);
+  padding: 0.875rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.875rem;
+  color: #B45309;
+}
+
+.review-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.625rem;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  header {
+    padding: 0.75rem 1rem;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .logo {
+    justify-content: center;
+    margin-bottom: 0.75rem;
+  }
+  
+  nav {
+    overflow-x: auto;
+    justify-content: center;
+  }
+  
+  main {
+    padding: 1.25rem 1rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .item-row {
+    grid-template-columns: auto 1fr auto auto;
+  }
+  
+  .item-row .questoes,
+  .item-row .fonte {
+    display: none;
+  }
+  
+  .filters-bar {
+    flex-direction: column;
+  }
+  
+  .filters-bar input,
+  .filters-bar select {
+    width: 100%;
+  }
+}
+
+/* ============================================
+   UTILITIES
+   ============================================ */
 .page { display: none; }
 .page.active { display: block; }
 
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-.card { animation: fadeIn 0.25s ease; }
-
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-primary); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
-
-.prereq-alert {
-  background: rgba(251,146,60,0.1);
-  border: 1px solid rgba(251,146,60,0.3);
-  border-radius: var(--radius-sm);
-  padding: 0.5rem;
-  margin-bottom: 0.75rem;
-  font-size: 0.7rem;
-  color: var(--accent-orange);
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+
+.card { animation: fadeIn 0.3s ease; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-page); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 </style>
 </head>
 <body>
@@ -609,30 +1075,28 @@ label {
   <header>
     <div class="header-content">
       <div class="logo">
-        <div class="logo-icon">∑</div>
-        <div>
-          <h1>Matemática: Domínio Total</h1>
-          <span>Base sólida para concursos</span>
+        <div class="logo-icon">π</div>
+        <div class="logo-text">
+          <h1>Matemática</h1>
+          <span>Domínio Total</span>
         </div>
       </div>
       <nav>
         <button class="active" data-page="dashboard">📊 Dashboard</button>
-        <button data-page="trilha">🛤️ Trilha</button>
+        <button data-page="trilha">📚 Trilha</button>
         <button data-page="exercicios">✏️ Exercícios</button>
         <button data-page="metas">🎯 Metas</button>
-        <button data-page="backup">💾 Backup</button>
+        <button data-page="backup">⚙️ Config</button>
       </nav>
     </div>
   </header>
 
   <main>
-    <!-- ============================================
-         DASHBOARD
-         ============================================ -->
+    <!-- DASHBOARD -->
     <div id="page-dashboard" class="page active">
-      <div class="quick-help">
-        <h3>🚀 Como usar em 30s</h3>
-        <p><strong>1)</strong> Siga a <em>Trilha</em> em ordem (Fase 1→10). <strong>2)</strong> Clique em um item para editar status, domínio e agendar revisão. <strong>3)</strong> Registre exercícios em <em>Exercícios</em>. <strong>4)</strong> Siga as tarefas de <em>Hoje</em> abaixo — elas priorizam revisões vencidas e suas fraquezas!</p>
+      <div class="welcome-banner">
+        <h2>🚀 Bem-vindo à sua jornada!</h2>
+        <p>Siga a <strong>Trilha</strong> na ordem sugerida, registre seus exercícios e acompanhe seu progresso. O painel <strong>Hoje</strong> mostra as tarefas mais importantes do dia!</p>
       </div>
 
       <div class="stats-grid" id="stats-grid"></div>
@@ -640,39 +1104,49 @@ label {
       <div class="dashboard-grid">
         <div class="card">
           <div class="card-header">
-            <h2 class="card-title">📈 Progresso por Fase</h2>
+            <div>
+              <h2 class="card-title"><span class="icon">📈</span> Progresso por Fase</h2>
+              <p class="card-subtitle">Acompanhe sua evolução</p>
+            </div>
           </div>
           <div id="fases-progress"></div>
         </div>
 
         <div class="card">
           <div class="card-header">
-            <h2 class="card-title">🔔 Fila de Revisão</h2>
-            <label style="font-size:0.65rem;display:flex;align-items:center;gap:0.3rem;">
-              <input type="checkbox" id="filtro-vencidas" style="width:auto;"> Só vencidas
+            <div>
+              <h2 class="card-title"><span class="icon">🔔</span> Fila de Revisão</h2>
+              <p class="card-subtitle">Revisões programadas</p>
+            </div>
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.875rem;">
+              <input type="checkbox" id="filtro-vencidas" style="width: 18px; height: 18px;">
+              Só vencidas
             </label>
           </div>
-          <p style="font-size:0.65rem;color:var(--text-muted);margin-bottom:0.5rem;">Revisão espaçada: ao fazer, agende nova revisão (7d/15d/30d). Cada vez que concluir, o app conta +1 revisão na semana.</p>
+          <div class="review-info">
+            💡 <strong>Revisão espaçada:</strong> Agende revisões em 1, 7, 15 ou 30 dias. Marque "Feito" para reagendar automaticamente.
+          </div>
           <div id="fila-revisao"></div>
         </div>
 
         <div class="card" style="grid-column: 1 / -1;">
           <div class="card-header">
-            <h2 class="card-title">📅 Hoje — O que estudar</h2>
-            <div class="hoje-config">
-              <label>Tempo:</label>
+            <div>
+              <h2 class="card-title"><span class="icon">📅</span> Hoje</h2>
+              <p class="card-subtitle">Suas tarefas prioritárias</p>
+            </div>
+            <div class="today-config">
               <select id="hoje-tempo">
                 <option value="30">30 min</option>
                 <option value="60" selected>60 min</option>
                 <option value="90">90 min</option>
                 <option value="120">120 min</option>
               </select>
-              <label>Tarefas:</label>
               <select id="hoje-qtd">
-                <option value="5">5</option>
-                <option value="8" selected>8</option>
-                <option value="10">10</option>
-                <option value="12">12</option>
+                <option value="5">5 tarefas</option>
+                <option value="8" selected>8 tarefas</option>
+                <option value="10">10 tarefas</option>
+                <option value="12">12 tarefas</option>
               </select>
               <button class="btn btn-sm btn-primary" onclick="gerarHoje()">Gerar</button>
             </div>
@@ -682,15 +1156,11 @@ label {
       </div>
     </div>
 
-    <!-- ============================================
-         TRILHA
-         ============================================ -->
+    <!-- TRILHA -->
     <div id="page-trilha" class="page">
       <div class="filters-bar">
-        <input type="text" id="filtro-busca" class="search-input" placeholder="🔍 Buscar item...">
-        <select id="filtro-fase">
-          <option value="">Todas as fases</option>
-        </select>
+        <input type="text" id="filtro-busca" class="search-input" placeholder="🔍 Buscar...">
+        <select id="filtro-fase"><option value="">Todas as fases</option></select>
         <select id="filtro-status">
           <option value="">Todos status</option>
           <option value="nao-iniciado">Não iniciado</option>
@@ -719,20 +1189,17 @@ label {
           <option value="revisoes-vencidas">Revisões vencidas</option>
         </select>
       </div>
-
       <div id="trilha-lista"></div>
     </div>
 
-    <!-- ============================================
-         EXERCÍCIOS
-         ============================================ -->
+    <!-- EXERCÍCIOS -->
     <div id="page-exercicios" class="page">
-      <div class="card ex-form">
+      <div class="card exercise-form">
         <div class="card-header">
-          <h2 class="card-title">✏️ Registrar Exercícios</h2>
+          <h2 class="card-title"><span class="icon">✏️</span> Registrar Exercícios</h2>
         </div>
         <div class="form-group">
-          <label>Item</label>
+          <label>Item da Trilha</label>
           <select id="ex-item"></select>
         </div>
         <div class="form-row">
@@ -751,83 +1218,89 @@ label {
         </div>
         <div class="form-group">
           <label>Erro típico (opcional)</label>
-          <textarea id="ex-erro" rows="2" placeholder="Ex: Esqueci regra de sinais..."></textarea>
+          <textarea id="ex-erro-tipico" rows="2" placeholder="Ex: Esqueci de inverter a fração..."></textarea>
         </div>
-        <button class="btn btn-primary" onclick="registrarExercicio()">💾 Salvar</button>
+        <button class="btn btn-primary" onclick="registrarExercicio()">Salvar Exercício</button>
       </div>
 
-      <div class="card" style="margin-top:1rem;">
+      <div class="card" style="margin-top: 1.5rem;">
         <div class="card-header">
-          <h2 class="card-title">📜 Histórico Recente</h2>
+          <h2 class="card-title"><span class="icon">📜</span> Histórico Recente</h2>
         </div>
         <div id="historico-lista"></div>
       </div>
     </div>
 
-    <!-- ============================================
-         METAS
-         ============================================ -->
+    <!-- METAS -->
     <div id="page-metas" class="page">
-      <div class="semana-info" id="semana-info"></div>
+      <div class="week-info" id="week-info"></div>
 
-      <div class="metas-grid">
-        <div class="meta-card">
-          <h4>🎯 Questões/Semana</h4>
-          <input type="number" id="meta-questoes" min="0" value="50">
-          <div class="valor" id="val-questoes">0</div>
-          <div class="meta-info">de <span id="meta-q-label">50</span></div>
-          <div class="progress-bar"><div class="progress-fill blue" id="prog-questoes" style="width:0%;"></div></div>
+      <div class="auto-goals">
+        <h4>⚡ Metas Automáticas</h4>
+        <p>Escolha seu tempo disponível por dia e definiremos metas realistas:</p>
+        <div class="time-buttons">
+          <button class="btn btn-secondary" onclick="definirMetasAuto(30)">30 min/dia</button>
+          <button class="btn btn-secondary" onclick="definirMetasAuto(60)">60 min/dia</button>
+          <button class="btn btn-secondary" onclick="definirMetasAuto(90)">90 min/dia</button>
+          <button class="btn btn-secondary" onclick="definirMetasAuto(120)">120 min/dia</button>
         </div>
-        <div class="meta-card">
+      </div>
+
+      <div class="goals-grid">
+        <div class="goal-card">
+          <h4>📝 Questões por Semana</h4>
+          <div class="form-group" style="margin-bottom: 0.5rem;">
+            <input type="number" id="meta-questoes" min="0" value="50">
+          </div>
+          <div class="value" id="questoes-semana">0</div>
+          <div class="meta-info">de <span id="meta-questoes-val">50</span></div>
+          <div class="progress-bar"><div class="progress-fill primary" id="progress-questoes" style="width: 0%;"></div></div>
+        </div>
+
+        <div class="goal-card">
           <h4>✅ Itens Concluídos</h4>
-          <input type="number" id="meta-concluidos" min="0" value="6">
-          <div class="valor" id="val-concluidos">0</div>
-          <div class="meta-info">de <span id="meta-c-label">6</span></div>
-          <div class="progress-bar"><div class="progress-fill green" id="prog-concluidos" style="width:0%;"></div></div>
+          <div class="form-group" style="margin-bottom: 0.5rem;">
+            <input type="number" id="meta-concluidos" min="0" value="6">
+          </div>
+          <div class="value" id="concluidos-semana">0</div>
+          <div class="meta-info">de <span id="meta-concluidos-val">6</span></div>
+          <div class="progress-bar"><div class="progress-fill success" id="progress-concluidos" style="width: 0%;"></div></div>
         </div>
-        <div class="meta-card">
-          <h4>🔄 Revisões/Semana</h4>
-          <input type="number" id="meta-revisoes" min="0" value="14">
-          <div class="valor" id="val-revisoes">0</div>
-          <div class="meta-info">de <span id="meta-r-label">14</span></div>
-          <div class="progress-bar"><div class="progress-fill yellow" id="prog-revisoes" style="width:0%;"></div></div>
+
+        <div class="goal-card">
+          <h4>🔄 Revisões por Semana</h4>
+          <div class="form-group" style="margin-bottom: 0.5rem;">
+            <input type="number" id="meta-revisoes" min="0" value="14">
+          </div>
+          <div class="value" id="revisoes-semana">0</div>
+          <div class="meta-info">de <span id="meta-revisoes-val">14</span></div>
+          <div class="progress-bar"><div class="progress-fill warning" id="progress-revisoes" style="width: 0%;"></div></div>
         </div>
       </div>
 
       <button class="btn btn-primary" onclick="salvarMetas()">💾 Salvar Metas</button>
-
-      <div class="auto-metas">
-        <h4>⚡ Definir metas automaticamente</h4>
-        <p>Escolha seu tempo disponível por dia e o app sugere metas semanais realistas:</p>
-        <div class="tempo-btns">
-          <button class="btn btn-secondary" onclick="autoMetas(30)">30 min/dia</button>
-          <button class="btn btn-secondary" onclick="autoMetas(60)">60 min/dia</button>
-          <button class="btn btn-secondary" onclick="autoMetas(90)">90 min/dia</button>
-          <button class="btn btn-secondary" onclick="autoMetas(120)">120 min/dia</button>
-        </div>
-      </div>
     </div>
 
-    <!-- ============================================
-         BACKUP
-         ============================================ -->
+    <!-- BACKUP -->
     <div id="page-backup" class="page">
       <div class="backup-section">
         <div class="card">
           <div class="card-header">
-            <h2 class="card-title">💾 Backup & Restauração</h2>
+            <h2 class="card-title"><span class="icon">💾</span> Backup & Restauração</h2>
           </div>
-          <p style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:0.75rem;">Exporte seus dados ou importe um backup anterior.</p>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+            Exporte seus dados para backup ou importe dados salvos anteriormente.
+          </p>
           <div class="backup-buttons">
             <button class="btn btn-primary" onclick="exportarDados()">📤 Exportar JSON</button>
             <button class="btn btn-secondary" onclick="document.getElementById('import-file').click()">📥 Importar JSON</button>
-            <input type="file" id="import-file" accept=".json" style="display:none;" onchange="importarDados(event)">
+            <input type="file" id="import-file" accept=".json" style="display: none;" onchange="importarDados(event)">
           </div>
         </div>
 
         <div class="danger-zone">
           <h3>⚠️ Zona de Perigo</h3>
-          <p>Apaga TODOS os dados. Não pode ser desfeito.</p>
+          <p>Esta ação apagará todos os seus dados permanentemente.</p>
           <button class="btn btn-danger" onclick="resetarDados()">🗑️ Resetar Tudo</button>
         </div>
       </div>
@@ -835,16 +1308,17 @@ label {
   </main>
 </div>
 
-<!-- MODAL EDIÇÃO -->
-<div class="modal-overlay" id="modal-edit">
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-editar">
   <div class="modal">
     <div class="modal-header">
       <h3 id="modal-titulo">Editar Item</h3>
-      <button class="modal-close" onclick="fecharModal()">&times;</button>
+      <button class="modal-close" onclick="fecharModal()">×</button>
     </div>
     <div class="modal-body">
-      <div id="prereq-warning" class="prereq-alert" style="display:none;"></div>
       <input type="hidden" id="edit-id">
+      <div id="prereq-warning" class="prereq-alert" style="display: none;"></div>
+      
       <div class="form-group">
         <label>Status</label>
         <select id="edit-status">
@@ -854,343 +1328,233 @@ label {
           <option value="concluido">Concluído</option>
         </select>
       </div>
+      
       <div class="form-group">
         <label>Domínio (0-4)</label>
         <select id="edit-dominio">
           <option value="0">0 — Travo / não sei</option>
           <option value="1">1 — Entendo com ajuda</option>
           <option value="2">2 — Faço questões fáceis</option>
-          <option value="3">3 — Médias e explico</option>
+          <option value="3">3 — Faço médias e explico</option>
           <option value="4">4 — Domino e acerto em prova</option>
         </select>
       </div>
+      
       <div class="form-group">
-        <label>Fonte</label>
-        <select id="edit-fonte">
-          <option value="Ambos">Ambos</option>
-          <option value="Ferretto">Ferretto</option>
-          <option value="Livro">Livro</option>
-        </select>
+        <label>Erro Típico</label>
+        <textarea id="edit-erro" rows="2" placeholder="Anote seus erros mais comuns..."></textarea>
       </div>
-      <div class="form-group">
-        <label>Erros Típicos</label>
-        <textarea id="edit-erros" rows="2" placeholder="Anote erros comuns..."></textarea>
-      </div>
+      
       <div class="form-group">
         <label>Agendar Revisão</label>
-        <div class="review-btns">
-          <button class="btn btn-xs btn-secondary" onclick="agendarRevisao(1)">1d</button>
-          <button class="btn btn-xs btn-secondary" onclick="agendarRevisao(7)">7d</button>
-          <button class="btn btn-xs btn-secondary" onclick="agendarRevisao(15)">15d</button>
-          <button class="btn btn-xs btn-secondary" onclick="agendarRevisao(30)">30d</button>
-          <button class="btn btn-xs btn-secondary" onclick="limparRevisao()">Limpar</button>
+        <div class="review-buttons">
+          <button class="btn btn-xs btn-secondary" onclick="agendarRevisao(1)">1 dia</button>
+          <button class="btn btn-xs btn-secondary" onclick="agendarRevisao(7)">7 dias</button>
+          <button class="btn btn-xs btn-secondary" onclick="agendarRevisao(15)">15 dias</button>
+          <button class="btn btn-xs btn-secondary" onclick="agendarRevisao(30)">30 dias</button>
+          <button class="btn btn-xs btn-ghost" onclick="limparRevisao()">Limpar</button>
         </div>
-        <small id="edit-due-info" style="color:var(--text-muted);margin-top:0.3rem;display:block;"></small>
+        <small id="edit-revisao-info" style="color: var(--text-muted); margin-top: 0.5rem; display: block;"></small>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-secondary" onclick="fecharModal()">Cancelar</button>
-      <button class="btn btn-primary" onclick="salvarEdicao()">💾 Salvar</button>
+      <button class="btn btn-primary" onclick="salvarEdicao()">Salvar</button>
     </div>
   </div>
 </div>
 
 <script>
 /* ============================================
-   TRILHA DE APRENDIZADO (CONTEÚDO)
-   ============================================
-   
-   COMO EDITAR A TRILHA:
-   Modifique o array TRILHA abaixo.
-   Estrutura: fases[] → módulos[] → itens[]
-   
-   Cada item:
-   - nome: string
-   - fonte: "Ferretto" | "Livro" | "Ambos"
-   
-   COMO AJUSTAR PRIORIDADES:
-   - Módulos/Fases com prioridadeBB: true serão destacados
-   - O algoritmo "Hoje" usa faseId para determinar ordem
-*/
+   TRILHA DE CONTEÚDO
+   ============================================ */
 const TRILHA = [
   {
-    id: 1,
-    nome: "Fase 1 — Fundamentos e Linguagem",
+    id: 1, nome: "FASE 1 — Fundamentos e Linguagem", prioridade: 3,
     modulos: [
-      {
-        id: 1,
-        nome: "Módulo 1: Linguagem Matemática",
-        itens: [
-          { nome: "Linguagem matemática (símbolos, leitura)", fonte: "Livro" },
-          { nome: "Números famosos (introdução)", fonte: "Livro" },
-          { nome: "Problemas simples iniciais (interpretação)", fonte: "Livro" }
-        ]
-      },
-      {
-        id: 2,
-        nome: "Módulo 2: Sistema de Numeração",
-        itens: [
-          { nome: "Sistema de numeração decimal", fonte: "Ferretto" },
-          { nome: "Algarismos, valor absoluto e relativo", fonte: "Livro" },
-          { nome: "Classes e ordens; escrever por extenso", fonte: "Livro" },
-          { nome: "Numerais romanos", fonte: "Livro" }
-        ]
-      },
-      {
-        id: 3,
-        nome: "Módulo 3: Conjuntos Numéricos",
-        itens: [
-          { nome: "Naturais", fonte: "Ferretto" },
-          { nome: "Inteiros", fonte: "Ferretto" },
-          { nome: "Racionais", fonte: "Ferretto" },
-          { nome: "Decimais exatos e dízimas periódicas", fonte: "Ferretto" },
-          { nome: "Irracionais", fonte: "Ferretto" },
-          { nome: "Reais", fonte: "Ferretto" },
-          { nome: "Revisão: tipos de número e exemplos", fonte: "Ambos" }
-        ]
-      }
+      { id: 1, nome: "Módulo 1: Linguagem Matemática", itens: [
+        { nome: "Linguagem matemática (símbolos, leitura)", fonte: "Livro" },
+        { nome: "Números famosos (introdução)", fonte: "Livro" },
+        { nome: "Problemas simples iniciais", fonte: "Livro" }
+      ]},
+      { id: 2, nome: "Módulo 2: Sistema de Numeração", itens: [
+        { nome: "Sistema de numeração decimal", fonte: "Ferretto" },
+        { nome: "Algarismos, valor absoluto e relativo", fonte: "Livro" },
+        { nome: "Classes e ordens; escrever por extenso", fonte: "Livro" },
+        { nome: "Numerais romanos", fonte: "Livro" }
+      ]},
+      { id: 3, nome: "Módulo 3: Conjuntos Numéricos", itens: [
+        { nome: "Naturais", fonte: "Ferretto" },
+        { nome: "Inteiros", fonte: "Ferretto" },
+        { nome: "Racionais", fonte: "Ferretto" },
+        { nome: "Decimais exatos e dízimas periódicas", fonte: "Ferretto" },
+        { nome: "Irracionais", fonte: "Ferretto" },
+        { nome: "Reais", fonte: "Ferretto" },
+        { nome: "Revisão: tipos de número e exemplos", fonte: "Ambos" }
+      ]}
     ]
   },
   {
-    id: 2,
-    nome: "Fase 2 — Aritmética com Fluência",
+    id: 2, nome: "FASE 2 — Aritmética com Fluência", prioridade: 4,
     modulos: [
-      {
-        id: 4,
-        nome: "Módulo 4: Calcule Rápido",
-        itens: [
-          { nome: "Estratégias de soma/subtração rápida", fonte: "Livro" },
-          { nome: "Multiplicação mental básica", fonte: "Livro" },
-          { nome: "Divisão exata e prova real", fonte: "Livro" },
-          { nome: "Quadrados perfeitos e cubos", fonte: "Livro" },
-          { nome: "A prova dos 9", fonte: "Livro" },
-          { nome: "Zero e um / propriedades", fonte: "Livro" }
-        ]
-      },
-      {
-        id: 5,
-        nome: "Módulo 5: As 4 Operações",
-        itens: [
-          { nome: "Adição e subtração", fonte: "Ferretto" },
-          { nome: "Multiplicação", fonte: "Ferretto" },
-          { nome: "Divisão", fonte: "Ferretto" },
-          { nome: "Termos das operações e problemas", fonte: "Livro" },
-          { nome: "Propriedades: fechamento, comutativa, associativa, distributiva", fonte: "Livro" },
-          { nome: "Expressões com as quatro operações", fonte: "Ambos" },
-          { nome: "Expressões numéricas Parte 1", fonte: "Ferretto" },
-          { nome: "Expressões numéricas Parte 2", fonte: "Ferretto" }
-        ]
-      }
+      { id: 4, nome: "Módulo 4: Calcule Rápido", itens: [
+        { nome: "Estratégias de soma/subtração rápida", fonte: "Livro" },
+        { nome: "Multiplicação mental básica", fonte: "Livro" },
+        { nome: "Divisão exata e prova real", fonte: "Livro" },
+        { nome: "Quadrados perfeitos e cubos", fonte: "Livro" },
+        { nome: "A prova dos 9", fonte: "Livro" },
+        { nome: "Zero e um / propriedades", fonte: "Livro" }
+      ]},
+      { id: 5, nome: "Módulo 5: As 4 Operações", itens: [
+        { nome: "Adição e subtração", fonte: "Ferretto" },
+        { nome: "Multiplicação", fonte: "Ferretto" },
+        { nome: "Divisão", fonte: "Ferretto" },
+        { nome: "Termos das operações e problemas", fonte: "Livro" },
+        { nome: "Propriedades: fechamento, comutativa, associativa, distributiva", fonte: "Livro" },
+        { nome: "Expressões com as quatro operações", fonte: "Ambos" },
+        { nome: "Expressões numéricas Parte 1", fonte: "Ferretto" },
+        { nome: "Expressões numéricas Parte 2", fonte: "Ferretto" }
+      ]}
     ]
   },
   {
-    id: 3,
-    nome: "Fase 3 — Divisibilidade, Primos, MMC/MDC",
+    id: 3, nome: "FASE 3 — Divisibilidade, Primos, MMC/MDC", prioridade: 4,
     modulos: [
-      {
-        id: 6,
-        nome: "Módulo 6: Múltiplos, Divisores e Fatoração",
-        itens: [
-          { nome: "Múltiplos e divisores", fonte: "Ferretto" },
-          { nome: "Critérios de divisibilidade", fonte: "Ambos" },
-          { nome: "Números primos e compostos", fonte: "Ferretto" },
-          { nome: "Crivo de Eratóstenes", fonte: "Livro" },
-          { nome: "Fatoração de naturais", fonte: "Ambos" },
-          { nome: "Divisores de um inteiro; número de divisores", fonte: "Livro" },
-          { nome: "MMC", fonte: "Ambos" },
-          { nome: "MDC", fonte: "Ambos" },
-          { nome: "Primos entre si; propriedades MMC/MDC", fonte: "Livro" },
-          { nome: "Problemas clássicos: ciclos", fonte: "Livro" }
-        ]
-      }
+      { id: 6, nome: "Módulo 6: Múltiplos, Divisores e Fatoração", itens: [
+        { nome: "Múltiplos e divisores", fonte: "Ferretto" },
+        { nome: "Critérios de divisibilidade", fonte: "Ambos" },
+        { nome: "Números primos e compostos", fonte: "Ferretto" },
+        { nome: "Crivo de Eratóstenes", fonte: "Livro" },
+        { nome: "Fatoração de naturais", fonte: "Ambos" },
+        { nome: "Divisores de um inteiro; número de divisores", fonte: "Livro" },
+        { nome: "MMC", fonte: "Ambos" },
+        { nome: "MDC", fonte: "Ambos" },
+        { nome: "Primos entre si; propriedades de MMC/MDC", fonte: "Livro" },
+        { nome: "Problemas clássicos: ciclos, etc.", fonte: "Livro" }
+      ]}
     ]
   },
   {
-    id: 4,
-    nome: "Fase 4 — Frações e Decimais",
-    prereqFase: true,
+    id: 4, nome: "FASE 4 — Frações e Decimais", prioridade: 5,
     modulos: [
-      {
-        id: 7,
-        nome: "Módulo 7: Frações",
-        itens: [
-          { nome: "Fração como divisão; nomenclatura", fonte: "Livro" },
-          { nome: "Frações equivalentes e simplificação", fonte: "Livro" },
-          { nome: "Tipos: própria, imprópria, mista, aparente", fonte: "Livro" },
-          { nome: "Frações", fonte: "Ferretto" },
-          { nome: "Operações com frações", fonte: "Ferretto" },
-          { nome: "Expressões com frações", fonte: "Livro" },
-          { nome: "Potência de fração", fonte: "Livro" },
-          { nome: "Problemas clássicos com frações", fonte: "Livro" }
-        ]
-      },
-      {
-        id: 8,
-        nome: "Módulo 8: Decimais e Dízimas",
-        itens: [
-          { nome: "Números decimais; conversões fração↔decimal", fonte: "Livro" },
-          { nome: "Decimais exatos e dízimas periódicas (reforço)", fonte: "Ferretto" },
-          { nome: "Fração geratriz", fonte: "Livro" },
-          { nome: "Divisão com aproximação", fonte: "Livro" }
-        ]
-      }
+      { id: 7, nome: "Módulo 7: Frações", itens: [
+        { nome: "Fração como divisão; nomenclatura", fonte: "Livro", prereq: "Divisão" },
+        { nome: "Frações equivalentes e simplificação", fonte: "Livro" },
+        { nome: "Tipos: própria, imprópria, mista, aparente", fonte: "Livro" },
+        { nome: "Frações", fonte: "Ferretto" },
+        { nome: "Operações com frações", fonte: "Ferretto" },
+        { nome: "Expressões com frações", fonte: "Livro" },
+        { nome: "Potência de fração", fonte: "Livro" },
+        { nome: "Problemas clássicos com frações", fonte: "Livro" }
+      ]},
+      { id: 8, nome: "Módulo 8: Decimais e Dízimas", itens: [
+        { nome: "Números decimais; conversões fração↔decimal", fonte: "Livro", prereq: "Frações" },
+        { nome: "Decimais exatos e dízimas periódicas (reforço)", fonte: "Ferretto" },
+        { nome: "Fração geratriz", fonte: "Livro" },
+        { nome: "Divisão com aproximação", fonte: "Livro" }
+      ]}
     ]
   },
   {
-    id: 5,
-    nome: "Fase 5 — Potências e Raízes",
+    id: 5, nome: "FASE 5 — Potências e Raízes", prioridade: 4,
     modulos: [
-      {
-        id: 9,
-        nome: "Módulo 9: Potenciação",
-        itens: [
-          { nome: "Potenciação", fonte: "Ferretto" },
-          { nome: "Propriedades de potências", fonte: "Livro" },
-          { nome: "Potências de 10 e notação científica", fonte: "Ambos" },
-          { nome: "Comparando potências", fonte: "Livro" },
-          { nome: "Potência de decimal e aplicações", fonte: "Livro" }
-        ]
-      },
-      {
-        id: 10,
-        nome: "Módulo 10: Radiciação",
-        itens: [
-          { nome: "Radiciação: introdução", fonte: "Ferretto" },
-          { nome: "Propriedades 1", fonte: "Ferretto" },
-          { nome: "Propriedades 2", fonte: "Ferretto" },
-          { nome: "Racionalização de denominadores", fonte: "Ferretto" },
-          { nome: "Quadrados perfeitos (revisão)", fonte: "Livro" }
-        ]
-      }
+      { id: 9, nome: "Módulo 9: Potenciação", itens: [
+        { nome: "Potenciação", fonte: "Ferretto" },
+        { nome: "Propriedades de potências", fonte: "Livro" },
+        { nome: "Potências de 10 e notação científica", fonte: "Ambos" },
+        { nome: "Comparando potências", fonte: "Livro" },
+        { nome: "Potência de decimal e aplicações", fonte: "Livro" }
+      ]},
+      { id: 10, nome: "Módulo 10: Radiciação", itens: [
+        { nome: "Radiciação: introdução", fonte: "Ferretto" },
+        { nome: "Propriedades 1", fonte: "Ferretto" },
+        { nome: "Propriedades 2", fonte: "Ferretto" },
+        { nome: "Racionalização de denominadores", fonte: "Ferretto" },
+        { nome: "Quadrados perfeitos (revisão)", fonte: "Livro" }
+      ]}
     ]
   },
   {
-    id: 6,
-    nome: "Fase 6 — Medidas e Conversões",
+    id: 6, nome: "FASE 6 — Medidas e Conversões", prioridade: 3,
     modulos: [
-      {
-        id: 11,
-        nome: "Módulo 11: SI e Sistema Métrico",
-        itens: [
-          { nome: "Prefixos SI", fonte: "Ferretto" },
-          { nome: "Unidades: comprimento, área, volume, massa, capacidade", fonte: "Ferretto" },
-          { nome: "Sistema monetário / tempo", fonte: "Livro" },
-          { nome: "Sistema de medidas (reforço)", fonte: "Livro" }
-        ]
-      },
-      {
-        id: 12,
-        nome: "Módulo 12: Medidas Geométricas",
-        itens: [
-          { nome: "Comprimento, área, volume", fonte: "Livro" },
-          { nome: "Elementos básicos de plana e espacial", fonte: "Livro" }
-        ]
-      }
+      { id: 11, nome: "Módulo 11: SI e Sistema Métrico", itens: [
+        { nome: "Prefixos SI", fonte: "Ferretto" },
+        { nome: "Unidades: comprimento, área, volume, massa, capacidade", fonte: "Ferretto" },
+        { nome: "Sistema monetário / tempo", fonte: "Livro" },
+        { nome: "Sistema de medidas (reforço)", fonte: "Livro" }
+      ]},
+      { id: 12, nome: "Módulo 12: Medidas Geométricas", itens: [
+        { nome: "Comprimento, área, volume", fonte: "Livro" },
+        { nome: "Elementos básicos de plana e espacial", fonte: "Livro" }
+      ]}
     ]
   },
   {
-    id: 7,
-    nome: "Fase 7 — Razão, Proporção e Regra de Três",
-    prioridadeBB: true,
+    id: 7, nome: "FASE 7 — Razão, Proporção, Regra de Três", prioridade: 5,
     modulos: [
-      {
-        id: 13,
-        nome: "Módulo 13: Razões e Proporções",
-        prioridadeBB: true,
-        itens: [
-          { nome: "Razão e proporção", fonte: "Ferretto" },
-          { nome: "Grandezas diretamente proporcionais", fonte: "Ferretto" },
-          { nome: "Grandezas inversamente proporcionais", fonte: "Ferretto" },
-          { nome: "Divisão proporcional direta", fonte: "Ferretto" },
-          { nome: "Divisão proporcional inversa", fonte: "Ferretto" },
-          { nome: "Divisão proporcional (reforço)", fonte: "Ferretto" }
-        ]
-      },
-      {
-        id: 14,
-        nome: "Módulo 14: Regra de Três",
-        prioridadeBB: true,
-        itens: [
-          { nome: "Regra de três simples direta", fonte: "Ferretto" },
-          { nome: "Regra de três simples inversa", fonte: "Ferretto" },
-          { nome: "Regra de três composta", fonte: "Ferretto" }
-        ]
-      },
-      {
-        id: 15,
-        nome: "Módulo 15: Escalas",
-        itens: [
-          { nome: "Escala", fonte: "Ferretto" },
-          { nome: "Escalas métricas", fonte: "Ferretto" }
-        ]
-      }
+      { id: 13, nome: "Módulo 13: Razões e Proporções", itens: [
+        { nome: "Razão e proporção", fonte: "Ferretto", prereq: "Frações" },
+        { nome: "Grandezas diretamente proporcionais", fonte: "Ferretto" },
+        { nome: "Grandezas inversamente proporcionais", fonte: "Ferretto" },
+        { nome: "Divisão proporcional direta", fonte: "Ferretto" },
+        { nome: "Divisão proporcional inversa", fonte: "Ferretto" },
+        { nome: "Divisão proporcional (reforço)", fonte: "Ferretto" }
+      ]},
+      { id: 14, nome: "Módulo 14: Regra de Três", itens: [
+        { nome: "Regra de três simples direta", fonte: "Ferretto" },
+        { nome: "Regra de três simples inversa", fonte: "Ferretto" },
+        { nome: "Regra de três composta", fonte: "Ferretto" }
+      ]},
+      { id: 15, nome: "Módulo 15: Escalas", itens: [
+        { nome: "Escala", fonte: "Ferretto" },
+        { nome: "Escalas métricas", fonte: "Ferretto" }
+      ]}
     ]
   },
   {
-    id: 8,
-    nome: "Fase 8 — Porcentagem",
-    prioridadeBB: true,
+    id: 8, nome: "FASE 8 — Porcentagem", prioridade: 5,
     modulos: [
-      {
-        id: 16,
-        nome: "Módulo 16: Porcentagem Completa",
-        prioridadeBB: true,
-        itens: [
-          { nome: "Porcentagem como fração", fonte: "Livro" },
-          { nome: "Porcentagem Parte 1", fonte: "Ferretto" },
-          { nome: "Porcentagem Parte 2", fonte: "Ferretto" },
-          { nome: "Porcentagem Parte 3", fonte: "Ferretto" },
-          { nome: "Aumentos e descontos", fonte: "Livro" },
-          { nome: "Porcentagens combinadas / sucessivas", fonte: "Livro" },
-          { nome: "Lucro, multa, juros como aplicação", fonte: "Livro" }
-        ]
-      }
+      { id: 16, nome: "Módulo 16: Porcentagem Completa", itens: [
+        { nome: "Porcentagem como fração", fonte: "Livro", prereq: "Frações" },
+        { nome: "Porcentagem Parte 1", fonte: "Ferretto" },
+        { nome: "Porcentagem Parte 2", fonte: "Ferretto" },
+        { nome: "Porcentagem Parte 3", fonte: "Ferretto" },
+        { nome: "Aumentos e descontos", fonte: "Livro" },
+        { nome: "Porcentagens combinadas / sucessivas", fonte: "Livro" },
+        { nome: "Lucro, multa, juros como aplicação", fonte: "Livro" }
+      ]}
     ]
   },
   {
-    id: 9,
-    nome: "Fase 9 — Álgebra e Equações",
+    id: 9, nome: "FASE 9 — Álgebra e Equações", prioridade: 4,
     modulos: [
-      {
-        id: 17,
-        nome: "Módulo 17: Produtos Notáveis e Fatoração",
-        itens: [
-          { nome: "Produtos notáveis Parte 1", fonte: "Ferretto" },
-          { nome: "Produtos notáveis Parte 2", fonte: "Ferretto" },
-          { nome: "Fatoração: fator comum", fonte: "Ferretto" },
-          { nome: "Fatoração: diferença de quadrados", fonte: "Ferretto" },
-          { nome: "Fatoração: trinômio quadrado perfeito", fonte: "Ferretto" },
-          { nome: "Fatoração: trinômio do segundo grau", fonte: "Ferretto" }
-        ]
-      },
-      {
-        id: 18,
-        nome: "Módulo 18: Equações e Sistemas",
-        itens: [
-          { nome: "Noções sobre equações", fonte: "Livro" },
-          { nome: "Equação do 1º grau", fonte: "Ambos" },
-          { nome: "Problemas com equação 1º grau", fonte: "Livro" },
-          { nome: "Sistemas de equação 1º grau", fonte: "Livro" },
-          { nome: "Equação do 2º grau", fonte: "Ferretto" }
-        ]
-      }
+      { id: 17, nome: "Módulo 17: Produtos Notáveis e Fatoração", itens: [
+        { nome: "Produtos notáveis Parte 1", fonte: "Ferretto" },
+        { nome: "Produtos notáveis Parte 2", fonte: "Ferretto" },
+        { nome: "Fatoração: fator comum", fonte: "Ferretto" },
+        { nome: "Fatoração: diferença de quadrados", fonte: "Ferretto" },
+        { nome: "Fatoração: trinômio quadrado perfeito", fonte: "Ferretto" },
+        { nome: "Fatoração: trinômio do segundo grau", fonte: "Ferretto" }
+      ]},
+      { id: 18, nome: "Módulo 18: Equações e Sistemas", itens: [
+        { nome: "Noções sobre equações", fonte: "Livro" },
+        { nome: "Equação do 1º grau", fonte: "Ambos" },
+        { nome: "Problemas com equação 1º grau", fonte: "Livro" },
+        { nome: "Sistemas de equação 1º grau", fonte: "Livro" },
+        { nome: "Equação do 2º grau", fonte: "Ferretto" }
+      ]}
     ]
   },
   {
-    id: 10,
-    nome: "Fase 10 — Conjuntos",
+    id: 10, nome: "FASE 10 — Conjuntos", prioridade: 3,
     modulos: [
-      {
-        id: 19,
-        nome: "Módulo 19: Teoria dos Conjuntos",
-        itens: [
-          { nome: "Conceitos e notação", fonte: "Livro" },
-          { nome: "Subconjuntos", fonte: "Livro" },
-          { nome: "Operações com conjuntos", fonte: "Livro" },
-          { nome: "Diagrama de Venn", fonte: "Livro" },
-          { nome: "Nº de elementos, nº de subconjuntos, conjunto das partes", fonte: "Livro" }
-        ]
-      }
+      { id: 19, nome: "Módulo 19: Teoria dos Conjuntos", itens: [
+        { nome: "Conceitos e notação", fonte: "Livro" },
+        { nome: "Subconjuntos", fonte: "Livro" },
+        { nome: "Operações com conjuntos", fonte: "Livro" },
+        { nome: "Diagrama de Venn", fonte: "Livro" },
+        { nome: "Nº de elementos, subconjuntos, conjunto das partes", fonte: "Livro" }
+      ]}
     ]
   }
 ];
@@ -1202,7 +1566,7 @@ let estado = {
   itens: {},
   historico: [],
   metas: { questoes: 50, concluidos: 6, revisoes: 14 },
-  semana: { inicio: null, questoes: 0, concluidos: 0, revisoes: 0 }
+  semanaDados: { inicio: null, questoes: 0, concluidos: 0, revisoes: 0 }
 };
 
 /* ============================================
@@ -1213,57 +1577,44 @@ function inicializar() {
   inicializarItens();
   setupNavegacao();
   setupFiltros();
+  setupMetas();
   renderizarTudo();
   document.getElementById('filtro-vencidas').addEventListener('change', renderizarFilaRevisao);
 }
 
 function carregarDados() {
-  const dados = localStorage.getItem('mat-bb-v2');
+  const dados = localStorage.getItem('mat-bb-v3');
   if (dados) estado = JSON.parse(dados);
   verificarSemana();
 }
 
 function salvarDados() {
-  localStorage.setItem('mat-bb-v2', JSON.stringify(estado));
+  localStorage.setItem('mat-bb-v3', JSON.stringify(estado));
 }
 
 function inicializarItens() {
-  let globalId = 0;
+  let idx = 0;
   TRILHA.forEach(fase => {
     fase.modulos.forEach(modulo => {
-      modulo.itens.forEach((item, idx) => {
-        const key = `item_${globalId}`;
+      modulo.itens.forEach(item => {
+        const key = `item_${idx}`;
         if (!estado.itens[key]) {
           estado.itens[key] = {
-            id: key,
-            faseId: fase.id,
-            faseNome: fase.nome,
-            moduloId: modulo.id,
-            moduloNome: modulo.nome,
-            ordem: globalId,
-            nome: item.nome,
-            fonte: item.fonte,
-            prioridadeBB: fase.prioridadeBB || modulo.prioridadeBB || false,
-            status: 'nao-iniciado',
-            dominio: 0,
-            questoesFeitas: 0,
-            acertos: 0,
-            erros: 0,
-            erroTipico: '',
-            updatedAt: null,
-            dueAt: null,
-            reviewCount: 0,
-            lastReviewedAt: null
+            id: key, idx, faseId: fase.id, faseNome: fase.nome, fasePrioridade: fase.prioridade,
+            moduloId: modulo.id, moduloNome: modulo.nome, nome: item.nome, fonte: item.fonte,
+            prereq: item.prereq || null, status: 'nao-iniciado', dominio: 0,
+            questoesFeitas: 0, acertos: 0, erros: 0, erroTipico: '',
+            dueAt: null, reviewCount: 0, lastReviewedAt: null, updatedAt: null
           };
         } else {
           estado.itens[key].faseNome = fase.nome;
+          estado.itens[key].fasePrioridade = fase.prioridade;
           estado.itens[key].moduloNome = modulo.nome;
           estado.itens[key].nome = item.nome;
           estado.itens[key].fonte = item.fonte;
-          estado.itens[key].prioridadeBB = fase.prioridadeBB || modulo.prioridadeBB || false;
-          estado.itens[key].ordem = globalId;
+          estado.itens[key].prereq = item.prereq || null;
         }
-        globalId++;
+        idx++;
       });
     });
   });
@@ -1272,22 +1623,19 @@ function inicializarItens() {
 
 function verificarSemana() {
   const hoje = new Date();
-  const dia = hoje.getDay();
-  const diff = dia === 0 ? -6 : 1 - dia;
-  const inicio = new Date(hoje);
-  inicio.setDate(hoje.getDate() + diff);
-  inicio.setHours(0,0,0,0);
-  const inicioStr = inicio.toISOString().split('T')[0];
+  const diaSemana = hoje.getDay();
+  const diff = (diaSemana === 0 ? -6 : 1) - diaSemana;
+  const inicioSemana = new Date(hoje);
+  inicioSemana.setDate(hoje.getDate() + diff);
+  inicioSemana.setHours(0, 0, 0, 0);
+  const inicioStr = inicioSemana.toISOString().split('T')[0];
   
-  if (estado.semana.inicio !== inicioStr) {
-    estado.semana = { inicio: inicioStr, questoes: 0, concluidos: 0, revisoes: 0 };
+  if (estado.semanaDados.inicio !== inicioStr) {
+    estado.semanaDados = { inicio: inicioStr, questoes: 0, concluidos: 0, revisoes: 0 };
     salvarDados();
   }
 }
 
-/* ============================================
-   NAVEGAÇÃO
-   ============================================ */
 function setupNavegacao() {
   document.querySelectorAll('nav button').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -1313,15 +1661,42 @@ function setupFiltros() {
     selectFase.appendChild(opt);
   });
   
-  ['filtro-busca','filtro-fase','filtro-status','filtro-dominio','filtro-fonte','filtro-ordenar'].forEach(id => {
+  ['filtro-busca', 'filtro-fase', 'filtro-status', 'filtro-dominio', 'filtro-fonte', 'filtro-ordenar'].forEach(id => {
     document.getElementById(id).addEventListener('input', renderizarTrilha);
     document.getElementById(id).addEventListener('change', renderizarTrilha);
   });
 }
 
-/* ============================================
-   RENDERIZAÇÃO GERAL
-   ============================================ */
+function setupMetas() {
+  document.getElementById('meta-questoes').value = estado.metas.questoes;
+  document.getElementById('meta-concluidos').value = estado.metas.concluidos;
+  document.getElementById('meta-revisoes').value = estado.metas.revisoes;
+}
+
+function salvarMetas() {
+  estado.metas.questoes = parseInt(document.getElementById('meta-questoes').value) || 50;
+  estado.metas.concluidos = parseInt(document.getElementById('meta-concluidos').value) || 6;
+  estado.metas.revisoes = parseInt(document.getElementById('meta-revisoes').value) || 14;
+  salvarDados();
+  renderizarMetas();
+  alert('Metas salvas!');
+}
+
+function definirMetasAuto(tempo) {
+  const configs = { 30: { questoes: 25, revisoes: 8, concluidos: 4 }, 60: { questoes: 50, revisoes: 14, concluidos: 6 }, 90: { questoes: 80, revisoes: 18, concluidos: 8 }, 120: { questoes: 110, revisoes: 22, concluidos: 10 } };
+  const cfg = configs[tempo] || configs[60];
+  
+  const itens = Object.values(estado.itens);
+  const dominioMedio = itens.length > 0 ? itens.reduce((a, i) => a + i.dominio, 0) / itens.length : 0;
+  
+  if (dominioMedio < 2) { cfg.questoes = Math.round(cfg.questoes * 1.2); cfg.revisoes = Math.round(cfg.revisoes * 1.3); }
+  
+  document.getElementById('meta-questoes').value = cfg.questoes;
+  document.getElementById('meta-concluidos').value = cfg.concluidos;
+  document.getElementById('meta-revisoes').value = cfg.revisoes;
+  salvarMetas();
+}
+
 function renderizarTudo() {
   renderizarDashboard();
   renderizarTrilha();
@@ -1329,9 +1704,7 @@ function renderizarTudo() {
   renderizarMetas();
 }
 
-/* ============================================
-   DASHBOARD
-   ============================================ */
+/* DASHBOARD */
 function renderizarDashboard() {
   renderizarStats();
   renderizarFasesProgress();
@@ -1345,40 +1718,40 @@ function renderizarStats() {
   const concluidos = itens.filter(i => i.status === 'concluido').length;
   const emAndamento = itens.filter(i => i.status === 'em-andamento').length;
   const revisar = itens.filter(i => i.status === 'revisar').length;
-  const dominioMedio = total > 0 ? (itens.reduce((a,i) => a + i.dominio, 0) / total).toFixed(1) : 0;
-  const totalQ = itens.reduce((a,i) => a + i.questoesFeitas, 0);
-  const totalA = itens.reduce((a,i) => a + i.acertos, 0);
-  const taxa = totalQ > 0 ? Math.round((totalA/totalQ)*100) : 0;
-  const progresso = total > 0 ? Math.round((concluidos/total)*100) : 0;
+  const dominioMedio = itens.length > 0 ? (itens.reduce((a, i) => a + i.dominio, 0) / itens.length).toFixed(1) : 0;
+  const totalQuestoes = itens.reduce((a, i) => a + i.questoesFeitas, 0);
+  const totalAcertos = itens.reduce((a, i) => a + i.acertos, 0);
+  const taxaAcerto = totalQuestoes > 0 ? Math.round((totalAcertos / totalQuestoes) * 100) : 0;
+  const progresso = total > 0 ? Math.round((concluidos / total) * 100) : 0;
   
   document.getElementById('stats-grid').innerHTML = `
-    <div class="stat-card highlight">
-      <div class="stat-value" style="color:var(--accent-cyan);">${progresso}%</div>
+    <div class="stat-card featured">
+      <div class="stat-value">${progresso}%</div>
       <div class="stat-label">Progresso</div>
     </div>
     <div class="stat-card">
-      <div class="stat-value" style="color:var(--accent-green);">${concluidos}</div>
+      <div class="stat-value" style="color: var(--secondary);">${concluidos}</div>
       <div class="stat-label">Concluídos</div>
     </div>
     <div class="stat-card">
-      <div class="stat-value" style="color:var(--accent-blue);">${emAndamento}</div>
+      <div class="stat-value" style="color: var(--primary);">${emAndamento}</div>
       <div class="stat-label">Em andamento</div>
     </div>
     <div class="stat-card">
-      <div class="stat-value" style="color:var(--accent-yellow);">${revisar}</div>
+      <div class="stat-value" style="color: var(--accent);">${revisar}</div>
       <div class="stat-label">Revisar</div>
     </div>
     <div class="stat-card">
-      <div class="stat-value" style="color:var(--accent-purple);">${dominioMedio}</div>
-      <div class="stat-label">Domínio médio</div>
+      <div class="stat-value" style="color: var(--primary);">${dominioMedio}</div>
+      <div class="stat-label">Domínio Médio</div>
     </div>
     <div class="stat-card">
-      <div class="stat-value">${totalQ}</div>
+      <div class="stat-value">${totalQuestoes}</div>
       <div class="stat-label">Questões</div>
     </div>
     <div class="stat-card">
-      <div class="stat-value" style="color:${taxa>=70?'var(--accent-green)':'var(--accent-orange)'};">${taxa}%</div>
-      <div class="stat-label">Taxa acerto</div>
+      <div class="stat-value" style="color: ${taxaAcerto >= 70 ? 'var(--secondary)' : 'var(--accent)'};">${taxaAcerto}%</div>
+      <div class="stat-label">Taxa de Acerto</div>
     </div>
   `;
 }
@@ -1391,18 +1764,18 @@ function renderizarFasesProgress() {
     const itens = Object.values(estado.itens).filter(i => i.faseId === fase.id);
     const total = itens.length;
     const concluidos = itens.filter(i => i.status === 'concluido').length;
-    const dominioMedio = total > 0 ? (itens.reduce((a,i) => a + i.dominio, 0) / total).toFixed(1) : 0;
-    const pct = total > 0 ? Math.round((concluidos/total)*100) : 0;
-    const tag = fase.prioridadeBB ? ' <span style="color:var(--accent-yellow);font-size:0.6rem;">⭐BB</span>' : '';
+    const dominioMedio = itens.length > 0 ? (itens.reduce((a, i) => a + i.dominio, 0) / itens.length).toFixed(1) : 0;
+    const progresso = total > 0 ? Math.round((concluidos / total) * 100) : 0;
+    const prioTag = fase.prioridade === 5 ? '<span class="priority-badge">Prioridade</span>' : '';
     
     html += `
-      <div class="module-progress">
-        <div class="module-progress-header">
-          <strong>${fase.nome.split(' — ')[1] || fase.nome}${tag}</strong>
+      <div class="fase-progress">
+        <div class="fase-progress-header">
+          <strong>${fase.nome.replace('FASE', 'F').split(' — ')[0]} ${prioTag}</strong>
           <span>${concluidos}/${total} • D${dominioMedio}</span>
         </div>
         <div class="progress-bar">
-          <div class="progress-fill ${pct>=80?'green':pct>=40?'cyan':'yellow'}" style="width:${pct}%;"></div>
+          <div class="progress-fill ${progresso >= 80 ? 'success' : progresso >= 40 ? 'primary' : 'warning'}" style="width: ${progresso}%;"></div>
         </div>
       </div>
     `;
@@ -1415,38 +1788,35 @@ function renderizarFilaRevisao() {
   const container = document.getElementById('fila-revisao');
   const apenasVencidas = document.getElementById('filtro-vencidas').checked;
   const agora = new Date();
-  agora.setHours(0,0,0,0);
   
-  let lista = Object.values(estado.itens)
+  let comRevisao = Object.values(estado.itens)
     .filter(i => i.dueAt)
-    .map(i => ({ ...i, dueDate: new Date(i.dueAt), vencida: new Date(i.dueAt) <= agora }));
+    .map(i => ({ ...i, dueDate: new Date(i.dueAt), vencida: new Date(i.dueAt) <= agora }))
+    .sort((a, b) => a.dueDate - b.dueDate);
   
-  if (apenasVencidas) lista = lista.filter(i => i.vencida);
+  if (apenasVencidas) comRevisao = comRevisao.filter(i => i.vencida);
+  comRevisao = comRevisao.slice(0, 8);
   
-  lista.sort((a,b) => a.dueDate - b.dueDate);
-  lista = lista.slice(0, 10);
-  
-  if (lista.length === 0) {
-    container.innerHTML = '<p style="color:var(--text-muted);font-size:0.75rem;">Nenhuma revisão agendada.</p>';
+  if (comRevisao.length === 0) {
+    container.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 1rem;">Nenhuma revisão agendada.</p>';
     return;
   }
   
   let html = '';
-  lista.forEach(i => {
-    const dias = Math.ceil((i.dueDate - agora) / (1000*60*60*24));
-    const diasTxt = dias <= 0 ? '⚠️ Vencida!' : dias === 1 ? 'Amanhã' : `Em ${dias}d`;
+  comRevisao.forEach(i => {
+    const diasAte = Math.ceil((i.dueDate - agora) / (1000 * 60 * 60 * 24));
+    const diasTexto = diasAte <= 0 ? '⚠️ Vencida' : diasAte === 1 ? 'Amanhã' : `Em ${diasAte}d`;
     
     html += `
-      <div class="revisao-item ${i.vencida ? 'vencida' : ''}">
+      <div class="review-item ${i.vencida ? 'overdue' : ''}">
         <span class="dominio-badge dominio-${i.dominio}">${i.dominio}</span>
         <div class="info">
           <div class="title">${i.nome}</div>
-          <div class="meta">${i.faseNome.split(' — ')[1] || ''} • ${diasTxt}</div>
+          <div class="meta">${diasTexto} • ${i.reviewCount} revisões</div>
         </div>
         <div class="actions">
-          <button class="btn btn-xs btn-secondary" onclick="abrirModal('${i.id}')">✏️</button>
-          <button class="btn btn-xs btn-success" onclick="concluirRevisao('${i.id}',7)" title="Feito (+7d)">✓7d</button>
-          <button class="btn btn-xs btn-warning" onclick="concluirRevisao('${i.id}',15)" title="Feito (+15d)">✓15d</button>
+          <button class="btn btn-xs btn-secondary" onclick="marcarRevisaoFeita('${i.id}', 7)">+7d</button>
+          <button class="btn btn-xs btn-secondary" onclick="marcarRevisaoFeita('${i.id}', 15)">+15d</button>
         </div>
       </div>
     `;
@@ -1455,139 +1825,81 @@ function renderizarFilaRevisao() {
   container.innerHTML = html;
 }
 
-function concluirRevisao(id, dias) {
+function marcarRevisaoFeita(id, dias) {
   const item = estado.itens[id];
   if (!item) return;
   
+  item.reviewCount++;
   item.lastReviewedAt = new Date().toISOString();
-  item.reviewCount = (item.reviewCount || 0) + 1;
-  item.dueAt = new Date(Date.now() + dias * 24*60*60*1000).toISOString();
+  item.dueAt = new Date(Date.now() + dias * 24 * 60 * 60 * 1000).toISOString();
   item.updatedAt = new Date().toISOString();
-  estado.semana.revisoes++;
+  estado.semanaDados.revisoes++;
   
   salvarDados();
   renderizarDashboard();
 }
 
-/* ============================================
-   ALGORITMO "HOJE"
-   ============================================
-   
-   COMO AJUSTAR O ALGORITMO:
-   Modifique a função gerarHoje() abaixo.
-   
-   Lógica atual:
-   1) Revisões vencidas (máxima prioridade)
-   2) Se domínio médio da Fase 4 < 2:
-      - Prioriza itens da Fase 3 e 4 com domínio baixo
-   3) Se domínio médio da Fase 4 >= 2:
-      - Prioriza módulos 13-16 (prioridadeBB)
-   4) Fase 9 (álgebra) só entra com força se Fase 5 tiver domínio médio >= 2
-   5) Itens com muitos erros (taxa > 30%)
-   6) Próximos itens na trilha (ordem)
-*/
 function gerarHoje() {
   const qtd = parseInt(document.getElementById('hoje-qtd').value) || 8;
   const container = document.getElementById('lista-hoje');
   const agora = new Date();
-  agora.setHours(0,0,0,0);
   
   const itens = Object.values(estado.itens);
-  
-  // Calcula domínio médio da Fase 4 (Frações/Decimais)
-  const itensFase4 = itens.filter(i => i.faseId === 4);
-  const dominioFase4 = itensFase4.length > 0 ? itensFase4.reduce((a,i) => a + i.dominio, 0) / itensFase4.length : 0;
-  
-  // Calcula domínio médio da Fase 5 (Potências/Raízes)
-  const itensFase5 = itens.filter(i => i.faseId === 5);
-  const dominioFase5 = itensFase5.length > 0 ? itensFase5.reduce((a,i) => a + i.dominio, 0) / itensFase5.length : 0;
+  const fase4 = itens.filter(i => i.faseId === 4);
+  const fase5 = itens.filter(i => i.faseId === 5);
+  const dominioFase4 = fase4.length > 0 ? fase4.reduce((a, i) => a + i.dominio, 0) / fase4.length : 0;
+  const dominioFase5 = fase5.length > 0 ? fase5.reduce((a, i) => a + i.dominio, 0) / fase5.length : 0;
+  const fase4Pronta = dominioFase4 >= 2;
+  const fase5Pronta = dominioFase5 >= 2;
   
   const pontuados = itens.map(i => {
     let pontos = 0;
+    if (i.dueAt && new Date(i.dueAt) <= agora) pontos += 2000;
     
-    // 1. Revisões vencidas (MÁXIMA)
-    if (i.dueAt && new Date(i.dueAt) <= agora) {
-      pontos += 2000;
-    }
+    const ehFase7ou8 = i.faseId === 7 || i.faseId === 8;
+    const ehFase9 = i.faseId === 9;
+    const ehFase3ou4 = i.faseId === 3 || i.faseId === 4;
     
-    // 2. Status "revisar"
-    if (i.status === 'revisar') pontos += 150;
+    if (!fase4Pronta && ehFase7ou8) pontos += 5;
+    else if (fase4Pronta && ehFase7ou8 && i.status !== 'concluido') { pontos += 500 * i.fasePrioridade; if (i.dominio <= 1) pontos += 300; }
     
-    // 3. Domínio baixo
-    if (i.dominio <= 1 && i.status !== 'concluido') {
-      // Se Fase 4 ainda fraca, prioriza Fase 3 e 4
-      if (dominioFase4 < 2 && (i.faseId === 3 || i.faseId === 4)) {
-        pontos += (4 - i.dominio) * 80;
-      } else if (dominioFase4 >= 2 && i.prioridadeBB) {
-        // Fase 4 OK, prioriza BB (módulos 13-16)
-        pontos += (4 - i.dominio) * 100;
-      } else {
-        pontos += (4 - i.dominio) * 40;
-      }
-    }
+    if (!fase5Pronta && ehFase9) pontos += 5;
+    else if (fase5Pronta && ehFase9 && i.status !== 'concluido') pontos += 100;
     
-    // 4. Prioridade BB (quando Fase 4 >= 2)
-    if (dominioFase4 >= 2 && i.prioridadeBB && i.status !== 'concluido') {
-      pontos += 120;
-    }
-    
-    // 5. Fase 9 (álgebra) só com força se Fase 5 >= 2
-    if (i.faseId === 9) {
-      if (dominioFase5 < 2) {
-        pontos = Math.max(0, pontos - 50);
-      }
-    }
-    
-    // 6. Muitos erros
-    if (i.questoesFeitas >= 5 && i.erros > 0) {
-      const taxaErro = i.erros / i.questoesFeitas;
-      if (taxaErro > 0.3) pontos += taxaErro * 80;
-    }
-    
-    // 7. Em andamento
-    if (i.status === 'em-andamento') pontos += 30;
-    
-    // 8. Nunca praticado
-    if (i.questoesFeitas === 0 && i.status !== 'concluido') pontos += 15;
-    
-    // 9. Ordem da trilha (incentiva continuar)
-    pontos += Math.max(0, 10 - (i.ordem / 10));
-    
-    // Penaliza concluídos sem revisão
+    if (!fase4Pronta && ehFase3ou4 && i.dominio <= 1 && i.status !== 'concluido') pontos += 400;
+    if (i.dominio <= 1 && i.status !== 'concluido') pontos += (4 - i.dominio) * 30 * i.fasePrioridade;
+    if (i.questoesFeitas >= 5 && i.erros > 0) { const taxaErro = i.erros / i.questoesFeitas; if (taxaErro > 0.3) pontos += taxaErro * 80 * i.fasePrioridade; }
+    if (i.status === 'em-andamento') pontos += 25 * i.fasePrioridade;
+    if (i.questoesFeitas === 0 && i.status === 'nao-iniciado') pontos += 15 + Math.max(0, 100 - i.idx);
+    if (i.status === 'revisar') pontos += 60;
     if (i.status === 'concluido' && !i.dueAt) pontos = 0;
     
     return { ...i, pontos };
   })
   .filter(i => i.pontos > 0)
-  .sort((a,b) => b.pontos - a.pontos)
+  .sort((a, b) => b.pontos - a.pontos)
   .slice(0, qtd);
   
   if (pontuados.length === 0) {
-    container.innerHTML = '<p style="color:var(--text-muted);font-size:0.75rem;">🎉 Nenhuma tarefa pendente! Continue praticando.</p>';
+    container.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 1rem;">🎉 Parabéns! Nenhuma tarefa pendente.</p>';
     return;
   }
   
   let html = '';
   pontuados.forEach((i, idx) => {
     const isRevisao = i.dueAt && new Date(i.dueAt) <= agora;
-    const motivo = isRevisao ? '🔔 Revisão' 
-      : i.dominio <= 1 ? '📉 Domínio baixo'
-      : i.erros > i.questoesFeitas * 0.3 ? '❌ Erros'
-      : i.status === 'em-andamento' ? '🔄 Em andamento'
-      : i.questoesFeitas === 0 ? '🆕 Novo'
-      : i.prioridadeBB ? '⭐ Prioridade BB'
-      : '📚 Trilha';
+    const motivo = isRevisao ? '🔔 Revisão' : i.dominio <= 1 ? '📉 Reforçar' : i.erros > i.questoesFeitas * 0.3 ? '❌ Muitos erros' : i.status === 'em-andamento' ? '🔄 Continuar' : i.questoesFeitas === 0 ? '🆕 Novo' : '📚 Estudar';
     
     html += `
-      <div class="hoje-item">
-        <span style="font-weight:bold;color:var(--text-muted);min-width:20px;">${idx+1}.</span>
+      <div class="today-item">
+        <span style="font-weight: 600; color: var(--text-muted); min-width: 24px;">${idx + 1}.</span>
         <span class="dominio-badge dominio-${i.dominio}">${i.dominio}</span>
         <div class="info">
           <div class="title">${i.nome}</div>
-          <div class="meta">${i.faseNome.split(' — ')[1] || ''} • ${motivo}</div>
+          <div class="meta">${i.moduloNome.split(':')[0]} • ${motivo}</div>
         </div>
         <div class="actions">
-          <button class="btn btn-xs btn-secondary" onclick="abrirModal('${i.id}')">✏️</button>
+          <button class="btn btn-xs btn-ghost" onclick="abrirModal('${i.id}')">✏️</button>
           <button class="btn btn-xs btn-success" onclick="marcarFeitoHoje('${i.id}')">✓</button>
         </div>
       </div>
@@ -1602,120 +1914,65 @@ function marcarFeitoHoje(id) {
   if (!item) return;
   
   if (item.status === 'nao-iniciado') item.status = 'em-andamento';
-  
-  if (item.dueAt && new Date(item.dueAt) <= new Date()) {
-    item.lastReviewedAt = new Date().toISOString();
-    item.reviewCount = (item.reviewCount || 0) + 1;
-    item.dueAt = null;
-    estado.semana.revisoes++;
-  }
-  
+  if (item.dueAt && new Date(item.dueAt) <= new Date()) { item.reviewCount++; item.lastReviewedAt = new Date().toISOString(); item.dueAt = null; estado.semanaDados.revisoes++; }
   item.updatedAt = new Date().toISOString();
   salvarDados();
   renderizarDashboard();
   
   if (confirm(`"${item.nome}" marcado!\n\nAgendar revisão em 7 dias?`)) {
-    item.dueAt = new Date(Date.now() + 7*24*60*60*1000).toISOString();
+    item.dueAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
     salvarDados();
     renderizarDashboard();
   }
 }
 
-/* ============================================
-   TRILHA
-   ============================================ */
+/* TRILHA */
 function renderizarTrilha() {
   const container = document.getElementById('trilha-lista');
   const busca = document.getElementById('filtro-busca').value.toLowerCase();
-  const faseF = document.getElementById('filtro-fase').value;
-  const statusF = document.getElementById('filtro-status').value;
-  const dominioF = document.getElementById('filtro-dominio').value;
-  const fonteF = document.getElementById('filtro-fonte').value;
+  const faseFiltro = document.getElementById('filtro-fase').value;
+  const statusFiltro = document.getElementById('filtro-status').value;
+  const dominioFiltro = document.getElementById('filtro-dominio').value;
+  const fonteFiltro = document.getElementById('filtro-fonte').value;
   const ordenar = document.getElementById('filtro-ordenar').value;
-  
-  let html = '';
   const agora = new Date();
   
-  const fasesFiltradas = faseF ? TRILHA.filter(f => f.id === parseInt(faseF)) : TRILHA;
+  let html = '';
+  const fasesFiltradas = faseFiltro ? TRILHA.filter(f => f.id === parseInt(faseFiltro)) : TRILHA;
   
   fasesFiltradas.forEach(fase => {
-    const itensFase = Object.values(estado.itens).filter(i => i.faseId === fase.id);
-    const totalFase = itensFase.length;
-    const concluidosFase = itensFase.filter(i => i.status === 'concluido').length;
-    const dominioFase = totalFase > 0 ? (itensFase.reduce((a,i) => a+i.dominio,0)/totalFase).toFixed(1) : 0;
+    let itensFase = Object.values(estado.itens).filter(i => i.faseId === fase.id);
+    if (busca) itensFase = itensFase.filter(i => i.nome.toLowerCase().includes(busca) || i.moduloNome.toLowerCase().includes(busca));
+    if (statusFiltro) itensFase = itensFase.filter(i => i.status === statusFiltro);
+    if (dominioFiltro !== '') itensFase = itensFase.filter(i => i.dominio === parseInt(dominioFiltro));
+    if (fonteFiltro) itensFase = itensFase.filter(i => i.fonte === fonteFiltro);
     
-    html += `
-      <div class="fase-section">
-        <div class="fase-header" onclick="toggleFase(${fase.id})">
-          <h2>${fase.nome} ${fase.prioridadeBB ? '<span class="fase-badge">⭐ PRIORIDADE BB</span>' : ''}</h2>
-          <div class="fase-stats">
-            <span>${concluidosFase}/${totalFase}</span>
-            <span>D${dominioFase}</span>
-            <span id="fase-toggle-${fase.id}">▼</span>
-          </div>
-        </div>
-        <div class="fase-content" id="fase-content-${fase.id}">
-    `;
+    if (ordenar === 'dominio-menor') itensFase.sort((a, b) => a.dominio - b.dominio);
+    else if (ordenar === 'mais-erros') itensFase.sort((a, b) => (b.erros / (b.questoesFeitas || 1)) - (a.erros / (a.questoesFeitas || 1)));
+    else if (ordenar === 'revisoes-vencidas') itensFase.sort((a, b) => { const aV = a.dueAt && new Date(a.dueAt) <= agora ? 1 : 0; const bV = b.dueAt && new Date(b.dueAt) <= agora ? 1 : 0; return bV - aV; });
+    else itensFase.sort((a, b) => a.idx - b.idx);
     
-    fase.modulos.forEach(modulo => {
-      let itensModulo = Object.values(estado.itens).filter(i => i.moduloId === modulo.id);
+    if (itensFase.length === 0 && (busca || statusFiltro || dominioFiltro || fonteFiltro)) return;
+    
+    const totalFase = Object.values(estado.itens).filter(i => i.faseId === fase.id).length;
+    const concluidosFase = Object.values(estado.itens).filter(i => i.faseId === fase.id && i.status === 'concluido').length;
+    
+    html += `<div class="fase-section"><div class="fase-header ${fase.prioridade === 5 ? 'priority' : ''}" onclick="toggleFase(${fase.id})"><h3>${fase.nome} ${fase.prioridade === 5 ? '<span class="priority-badge">Prioridade BB</span>' : ''}</h3><div class="stats"><span>${concluidosFase}/${totalFase}</span><span class="toggle-icon" id="fase-toggle-${fase.id}">▼</span></div></div><div class="fase-content" id="fase-content-${fase.id}">`;
+    
+    const modulos = {};
+    itensFase.forEach(i => { if (!modulos[i.moduloId]) modulos[i.moduloId] = { nome: i.moduloNome, itens: [] }; modulos[i.moduloId].itens.push(i); });
+    
+    Object.entries(modulos).forEach(([modId, mod]) => {
+      const totalMod = mod.itens.length;
+      const conclMod = mod.itens.filter(i => i.status === 'concluido').length;
       
-      if (busca) itensModulo = itensModulo.filter(i => i.nome.toLowerCase().includes(busca));
-      if (statusF) itensModulo = itensModulo.filter(i => i.status === statusF);
-      if (dominioF !== '') itensModulo = itensModulo.filter(i => i.dominio === parseInt(dominioF));
-      if (fonteF) itensModulo = itensModulo.filter(i => i.fonte === fonteF);
+      html += `<div class="modulo-section"><div class="modulo-header" onclick="toggleModulo(${modId})"><h4>${mod.nome}</h4><div class="stats">${conclMod}/${totalMod} <span id="mod-toggle-${modId}">▼</span></div></div><div class="modulo-content" id="mod-content-${modId}">`;
       
-      if (ordenar === 'dominio-menor') itensModulo.sort((a,b) => a.dominio - b.dominio);
-      else if (ordenar === 'mais-erros') itensModulo.sort((a,b) => (b.erros/(b.questoesFeitas||1)) - (a.erros/(a.questoesFeitas||1)));
-      else if (ordenar === 'revisoes-vencidas') {
-        itensModulo.sort((a,b) => {
-          const aV = a.dueAt && new Date(a.dueAt) <= agora ? 1 : 0;
-          const bV = b.dueAt && new Date(b.dueAt) <= agora ? 1 : 0;
-          return bV - aV;
-        });
-      } else {
-        itensModulo.sort((a,b) => a.ordem - b.ordem);
-      }
-      
-      if (itensModulo.length === 0 && (busca || statusF || dominioF || fonteF)) return;
-      
-      const totalMod = Object.values(estado.itens).filter(i => i.moduloId === modulo.id).length;
-      const concluidosMod = Object.values(estado.itens).filter(i => i.moduloId === modulo.id && i.status === 'concluido').length;
-      
-      html += `
-        <div class="modulo-section">
-          <div class="modulo-header ${modulo.prioridadeBB ? 'prioridade-alta' : ''}" onclick="toggleModulo(${modulo.id})">
-            <h3>${modulo.nome} ${modulo.prioridadeBB ? '<span class="mod-badge">BB</span>' : ''}</h3>
-            <div class="stats">
-              <span>${concluidosMod}/${totalMod}</span>
-              <span id="mod-toggle-${modulo.id}">▼</span>
-            </div>
-          </div>
-          <div class="modulo-content" id="mod-content-${modulo.id}">
-      `;
-      
-      itensModulo.forEach(i => {
-        const statusClass = i.status === 'concluido' ? 'concluido' : '';
-        const statusTag = {
-          'nao-iniciado': '<span class="tag tag-nao-iniciado">N/I</span>',
-          'em-andamento': '<span class="tag tag-em-andamento">Andamento</span>',
-          'revisar': '<span class="tag tag-revisar">Revisar</span>',
-          'concluido': '<span class="tag tag-concluido">OK</span>'
-        }[i.status];
+      mod.itens.forEach(i => {
+        const statusClass = i.status === 'concluido' ? 'done' : '';
+        const statusTag = { 'nao-iniciado': '<span class="tag tag-default">Não iniciado</span>', 'em-andamento': '<span class="tag tag-primary">Andamento</span>', 'revisar': '<span class="tag tag-warning">Revisar</span>', 'concluido': '<span class="tag tag-success">Concluído</span>' }[i.status];
         
-        html += `
-          <div class="item-row ${statusClass}" onclick="abrirModal('${i.id}')">
-            <div class="checkbox"></div>
-            <div class="nome">${i.nome}</div>
-            <span class="fonte">${i.fonte}</span>
-            <div class="questoes">
-              <span class="ok">✓${i.acertos}</span>
-              <span class="err">✗${i.erros}</span>
-            </div>
-            <span class="dominio-badge dominio-${i.dominio}">${i.dominio}</span>
-            ${statusTag}
-          </div>
-        `;
+        html += `<div class="item-row ${statusClass}" onclick="abrirModal('${i.id}')"><div class="checkbox"></div><div class="nome">${i.nome}</div><div class="fonte">${i.fonte}</div><div class="questoes"><span class="ok">✓${i.acertos}</span><span class="err">✗${i.erros}</span></div><span class="dominio-badge dominio-${i.dominio}">${i.dominio}</span>${statusTag}</div>`;
       });
       
       html += '</div></div>';
@@ -1724,36 +1981,13 @@ function renderizarTrilha() {
     html += '</div></div>';
   });
   
-  container.innerHTML = html || '<p style="color:var(--text-muted);">Nenhum item encontrado.</p>';
+  container.innerHTML = html || '<p style="color: var(--text-muted); text-align: center; padding: 2rem;">Nenhum item encontrado.</p>';
 }
 
-function toggleFase(id) {
-  const content = document.getElementById(`fase-content-${id}`);
-  const toggle = document.getElementById(`fase-toggle-${id}`);
-  if (content.classList.contains('open')) {
-    content.classList.remove('open');
-    toggle.textContent = '▼';
-  } else {
-    content.classList.add('open');
-    toggle.textContent = '▲';
-  }
-}
+function toggleFase(id) { const c = document.getElementById(`fase-content-${id}`); const t = document.getElementById(`fase-toggle-${id}`); c.classList.toggle('open'); t.textContent = c.classList.contains('open') ? '▲' : '▼'; }
+function toggleModulo(id) { const c = document.getElementById(`mod-content-${id}`); const t = document.getElementById(`mod-toggle-${id}`); c.classList.toggle('open'); t.textContent = c.classList.contains('open') ? '▲' : '▼'; }
 
-function toggleModulo(id) {
-  const content = document.getElementById(`mod-content-${id}`);
-  const toggle = document.getElementById(`mod-toggle-${id}`);
-  if (content.classList.contains('open')) {
-    content.classList.remove('open');
-    toggle.textContent = '▼';
-  } else {
-    content.classList.add('open');
-    toggle.textContent = '▲';
-  }
-}
-
-/* ============================================
-   MODAL
-   ============================================ */
+/* MODAL */
 function abrirModal(id) {
   const item = estado.itens[id];
   if (!item) return;
@@ -1762,36 +1996,23 @@ function abrirModal(id) {
   document.getElementById('modal-titulo').textContent = item.nome;
   document.getElementById('edit-status').value = item.status;
   document.getElementById('edit-dominio').value = item.dominio;
-  document.getElementById('edit-fonte').value = item.fonte;
-  document.getElementById('edit-erros').value = item.erroTipico || '';
+  document.getElementById('edit-erro').value = item.erroTipico || '';
   
-  const warning = document.getElementById('prereq-warning');
-  if (item.prioridadeBB || item.faseId >= 7) {
-    const itensFase4 = Object.values(estado.itens).filter(i => i.faseId === 4);
-    const dominioFase4 = itensFase4.length > 0 ? itensFase4.reduce((a,i) => a+i.dominio,0)/itensFase4.length : 0;
-    if (dominioFase4 < 2) {
-      warning.innerHTML = `<strong>⚠️ Atenção:</strong> Domínio médio da Fase 4 (Frações/Decimais) está em ${dominioFase4.toFixed(1)}. Recomenda-se ≥2 antes de avançar.`;
-      warning.style.display = 'block';
-    } else {
-      warning.style.display = 'none';
-    }
-  } else {
-    warning.style.display = 'none';
-  }
+  const prereqWarning = document.getElementById('prereq-warning');
+  if (item.prereq) {
+    const prereqItens = Object.values(estado.itens).filter(i => i.nome.toLowerCase().includes(item.prereq.toLowerCase()));
+    const prereqBaixo = prereqItens.some(p => p.dominio < 2);
+    prereqWarning.style.display = prereqBaixo ? 'block' : 'none';
+    prereqWarning.innerHTML = `⚠️ Pré-requisito "${item.prereq}" com domínio baixo. Considere reforçar antes.`;
+  } else { prereqWarning.style.display = 'none'; }
   
-  const dueInfo = document.getElementById('edit-due-info');
-  if (item.dueAt) {
-    dueInfo.textContent = `Revisão: ${new Date(item.dueAt).toLocaleDateString('pt-BR')} • ${item.reviewCount || 0} revisões`;
-  } else {
-    dueInfo.textContent = 'Sem revisão agendada';
-  }
+  const infoRevisao = document.getElementById('edit-revisao-info');
+  infoRevisao.textContent = item.dueAt ? `Próxima: ${new Date(item.dueAt).toLocaleDateString('pt-BR')} • ${item.reviewCount} revisões` : `Sem revisão agendada • ${item.reviewCount} revisões`;
   
-  document.getElementById('modal-edit').classList.add('active');
+  document.getElementById('modal-editar').classList.add('active');
 }
 
-function fecharModal() {
-  document.getElementById('modal-edit').classList.remove('active');
-}
+function fecharModal() { document.getElementById('modal-editar').classList.remove('active'); }
 
 function salvarEdicao() {
   const id = document.getElementById('edit-id').value;
@@ -1799,16 +2020,12 @@ function salvarEdicao() {
   if (!item) return;
   
   const statusAnterior = item.status;
-  
   item.status = document.getElementById('edit-status').value;
   item.dominio = parseInt(document.getElementById('edit-dominio').value);
-  item.fonte = document.getElementById('edit-fonte').value;
-  item.erroTipico = document.getElementById('edit-erros').value;
+  item.erroTipico = document.getElementById('edit-erro').value;
   item.updatedAt = new Date().toISOString();
   
-  if (statusAnterior !== 'concluido' && item.status === 'concluido') {
-    estado.semana.concluidos++;
-  }
+  if (statusAnterior !== 'concluido' && item.status === 'concluido') estado.semanaDados.concluidos++;
   
   salvarDados();
   fecharModal();
@@ -1819,9 +2036,8 @@ function agendarRevisao(dias) {
   const id = document.getElementById('edit-id').value;
   const item = estado.itens[id];
   if (!item) return;
-  
-  item.dueAt = new Date(Date.now() + dias * 24*60*60*1000).toISOString();
-  document.getElementById('edit-due-info').textContent = `Revisão: ${new Date(item.dueAt).toLocaleDateString('pt-BR')}`;
+  item.dueAt = new Date(Date.now() + dias * 24 * 60 * 60 * 1000).toISOString();
+  document.getElementById('edit-revisao-info').textContent = `Próxima: ${new Date(item.dueAt).toLocaleDateString('pt-BR')} • ${item.reviewCount} revisões`;
   salvarDados();
 }
 
@@ -1830,73 +2046,42 @@ function limparRevisao() {
   const item = estado.itens[id];
   if (!item) return;
   item.dueAt = null;
-  document.getElementById('edit-due-info').textContent = 'Sem revisão agendada';
+  document.getElementById('edit-revisao-info').textContent = `Sem revisão agendada • ${item.reviewCount} revisões`;
   salvarDados();
 }
 
-document.getElementById('modal-edit').addEventListener('click', function(e) {
-  if (e.target === this) fecharModal();
-});
-
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') fecharModal();
-});
-
-/* ============================================
-   EXERCÍCIOS
-   ============================================ */
+/* EXERCÍCIOS */
 function renderizarExercicios() {
   const select = document.getElementById('ex-item');
-  const current = select.value;
+  const currentValue = select.value;
   select.innerHTML = '<option value="">Selecione...</option>';
   
   TRILHA.forEach(fase => {
     const optgroup = document.createElement('optgroup');
     optgroup.label = fase.nome;
-    Object.values(estado.itens)
-      .filter(i => i.faseId === fase.id)
-      .sort((a,b) => a.ordem - b.ordem)
-      .forEach(i => {
-        const opt = document.createElement('option');
-        opt.value = i.id;
-        opt.textContent = i.nome;
-        optgroup.appendChild(opt);
-      });
+    Object.values(estado.itens).filter(i => i.faseId === fase.id).sort((a, b) => a.idx - b.idx).forEach(i => {
+      const opt = document.createElement('option');
+      opt.value = i.id;
+      opt.textContent = `${i.moduloNome.split(':')[0]}: ${i.nome}`;
+      optgroup.appendChild(opt);
+    });
     select.appendChild(optgroup);
   });
   
-  if (current) select.value = current;
+  if (currentValue) select.value = currentValue;
   
   const container = document.getElementById('historico-lista');
-  const hist = estado.historico.slice(-15).reverse();
+  const historico = estado.historico.slice(-20).reverse();
   
-  if (hist.length === 0) {
-    container.innerHTML = '<p style="color:var(--text-muted);font-size:0.75rem;">Nenhum registro.</p>';
-    return;
-  }
+  if (historico.length === 0) { container.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 1rem;">Nenhum registro ainda.</p>'; return; }
   
   let html = '';
-  hist.forEach(h => {
+  historico.forEach(h => {
     const item = estado.itens[h.itemId];
     const nome = item ? item.nome : 'Desconhecido';
     const data = new Date(h.data).toLocaleDateString('pt-BR');
-    
-    html += `
-      <div class="historico-item">
-        <div class="data">${data}</div>
-        <div>
-          <strong style="font-size:0.75rem;">${nome}</strong>
-          ${h.erro ? `<div style="font-size:0.65rem;color:var(--text-muted);">${h.erro}</div>` : ''}
-        </div>
-        <div class="resultado">
-          <span style="color:var(--accent-green);">✓${h.acertos}</span>
-          <span style="color:var(--accent-red);">✗${h.erros}</span>
-          <span style="color:var(--text-muted);">(${h.feitas})</span>
-        </div>
-      </div>
-    `;
+    html += `<div class="history-item"><div class="date">${data}</div><div><strong>${nome}</strong>${h.erroTipico ? `<div style="font-size: 0.8rem; color: var(--text-muted);">Erro: ${h.erroTipico}</div>` : ''}</div><div class="result"><span style="color: var(--secondary);">✓${h.acertos}</span><span style="color: var(--danger);">✗${h.erros}</span></div></div>`;
   });
-  
   container.innerHTML = html;
 }
 
@@ -1907,7 +2092,7 @@ function registrarExercicio() {
   const feitas = parseInt(document.getElementById('ex-feitas').value) || 0;
   const acertos = parseInt(document.getElementById('ex-acertos').value) || 0;
   const erros = parseInt(document.getElementById('ex-erros').value) || 0;
-  const erro = document.getElementById('ex-erro').value.trim();
+  const erroTipico = document.getElementById('ex-erro-tipico').value.trim();
   
   const item = estado.itens[itemId];
   if (!item) return;
@@ -1915,110 +2100,65 @@ function registrarExercicio() {
   item.questoesFeitas += feitas;
   item.acertos += acertos;
   item.erros += erros;
-  if (erro && !item.erroTipico.includes(erro)) {
-    item.erroTipico = item.erroTipico ? item.erroTipico + '; ' + erro : erro;
-  }
-  if (item.status === 'nao-iniciado') item.status = 'em-andamento';
   item.updatedAt = new Date().toISOString();
+  if (erroTipico && !item.erroTipico.includes(erroTipico)) item.erroTipico = item.erroTipico ? item.erroTipico + '; ' + erroTipico : erroTipico;
+  if (item.status === 'nao-iniciado') item.status = 'em-andamento';
   
-  estado.historico.push({ itemId, data: new Date().toISOString(), feitas, acertos, erros, erro });
-  estado.semana.questoes += feitas;
+  estado.historico.push({ itemId, data: new Date().toISOString(), feitas, acertos, erros, erroTipico });
+  estado.semanaDados.questoes += feitas;
   
   salvarDados();
   
   document.getElementById('ex-feitas').value = 10;
   document.getElementById('ex-acertos').value = 0;
   document.getElementById('ex-erros').value = 0;
-  document.getElementById('ex-erro').value = '';
+  document.getElementById('ex-erro-tipico').value = '';
   
   renderizarExercicios();
   renderizarDashboard();
-  alert('Registrado!');
+  alert('Exercício registrado!');
 }
 
-/* ============================================
-   METAS
-   ============================================ */
+/* METAS */
 function renderizarMetas() {
   const hoje = new Date();
-  const dia = hoje.getDay();
-  const diff = dia === 0 ? -6 : 1 - dia;
-  const inicio = new Date(hoje);
-  inicio.setDate(hoje.getDate() + diff);
-  const fim = new Date(inicio);
-  fim.setDate(inicio.getDate() + 6);
+  const diaSemana = hoje.getDay();
+  const diff = (diaSemana === 0 ? -6 : 1) - diaSemana;
+  const inicioSemana = new Date(hoje);
+  inicioSemana.setDate(hoje.getDate() + diff);
+  const fimSemana = new Date(inicioSemana);
+  fimSemana.setDate(inicioSemana.getDate() + 6);
+  const formatDate = d => d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
   
-  const fmt = d => d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
-  document.getElementById('semana-info').innerHTML = `
-    <span>📅 Semana: ${fmt(inicio)} a ${fmt(fim)}</span>
-    <span>${['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'][hoje.getDay()]}</span>
-  `;
+  document.getElementById('week-info').innerHTML = `<span>📅 Semana: ${formatDate(inicioSemana)} a ${formatDate(fimSemana)}</span><span>${['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'][hoje.getDay()]}</span>`;
   
-  document.getElementById('meta-questoes').value = estado.metas.questoes;
-  document.getElementById('meta-concluidos').value = estado.metas.concluidos;
-  document.getElementById('meta-revisoes').value = estado.metas.revisoes;
+  const metas = estado.metas;
+  const semana = estado.semanaDados;
   
-  document.getElementById('meta-q-label').textContent = estado.metas.questoes;
-  document.getElementById('meta-c-label').textContent = estado.metas.concluidos;
-  document.getElementById('meta-r-label').textContent = estado.metas.revisoes;
+  document.getElementById('meta-questoes-val').textContent = metas.questoes;
+  document.getElementById('meta-concluidos-val').textContent = metas.concluidos;
+  document.getElementById('meta-revisoes-val').textContent = metas.revisoes;
+  document.getElementById('questoes-semana').textContent = semana.questoes;
+  document.getElementById('concluidos-semana').textContent = semana.concluidos;
+  document.getElementById('revisoes-semana').textContent = semana.revisoes;
   
-  document.getElementById('val-questoes').textContent = estado.semana.questoes;
-  document.getElementById('val-concluidos').textContent = estado.semana.concluidos;
-  document.getElementById('val-revisoes').textContent = estado.semana.revisoes;
+  const pctQ = Math.min(100, Math.round((semana.questoes / metas.questoes) * 100));
+  const pctC = Math.min(100, Math.round((semana.concluidos / metas.concluidos) * 100));
+  const pctR = Math.min(100, Math.round((semana.revisoes / metas.revisoes) * 100));
   
-  const pQ = Math.min(100, Math.round((estado.semana.questoes / estado.metas.questoes) * 100));
-  const pC = Math.min(100, Math.round((estado.semana.concluidos / estado.metas.concluidos) * 100));
-  const pR = Math.min(100, Math.round((estado.semana.revisoes / estado.metas.revisoes) * 100));
-  
-  document.getElementById('prog-questoes').style.width = pQ + '%';
-  document.getElementById('prog-concluidos').style.width = pC + '%';
-  document.getElementById('prog-revisoes').style.width = pR + '%';
+  document.getElementById('progress-questoes').style.width = pctQ + '%';
+  document.getElementById('progress-concluidos').style.width = pctC + '%';
+  document.getElementById('progress-revisoes').style.width = pctR + '%';
 }
 
-function salvarMetas() {
-  estado.metas.questoes = parseInt(document.getElementById('meta-questoes').value) || 50;
-  estado.metas.concluidos = parseInt(document.getElementById('meta-concluidos').value) || 6;
-  estado.metas.revisoes = parseInt(document.getElementById('meta-revisoes').value) || 14;
-  salvarDados();
-  renderizarMetas();
-  alert('Metas salvas!');
-}
-
-function autoMetas(tempo) {
-  const tabela = {
-    30: { q: 25, c: 4, r: 8 },
-    60: { q: 50, c: 6, r: 14 },
-    90: { q: 80, c: 8, r: 18 },
-    120: { q: 110, c: 10, r: 22 }
-  };
-  
-  const m = tabela[tempo] || tabela[60];
-  
-  const itens = Object.values(estado.itens);
-  const dominioMedio = itens.length > 0 ? itens.reduce((a,i) => a+i.dominio,0)/itens.length : 0;
-  
-  if (dominioMedio < 2) {
-    m.q = Math.round(m.q * 1.2);
-    m.r = Math.round(m.r * 1.3);
-  }
-  
-  document.getElementById('meta-questoes').value = m.q;
-  document.getElementById('meta-concluidos').value = m.c;
-  document.getElementById('meta-revisoes').value = m.r;
-  
-  alert(`Metas sugeridas para ${tempo} min/dia:\n• ${m.q} questões\n• ${m.c} concluídos\n• ${m.r} revisões\n\nClique em "Salvar Metas" para confirmar.`);
-}
-
-/* ============================================
-   BACKUP
-   ============================================ */
+/* BACKUP */
 function exportarDados() {
   const dados = JSON.stringify(estado, null, 2);
   const blob = new Blob([dados], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `mat-bb-backup-${new Date().toISOString().split('T')[0]}.json`;
+  a.download = `matematica-backup-${new Date().toISOString().split('T')[0]}.json`;
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -2026,45 +2166,38 @@ function exportarDados() {
 function importarDados(event) {
   const file = event.target.files[0];
   if (!file) return;
-  
   const reader = new FileReader();
   reader.onload = function(e) {
     try {
       const dados = JSON.parse(e.target.result);
-      if (!dados.itens) throw new Error('Inválido');
-      if (confirm('Substituir todos os dados atuais?')) {
+      if (!dados.itens) throw new Error('Arquivo inválido');
+      if (confirm('Isso substituirá todos os dados atuais. Continuar?')) {
         estado = dados;
         salvarDados();
         inicializarItens();
         renderizarTudo();
-        alert('Importado!');
+        alert('Dados importados!');
       }
-    } catch (err) {
-      alert('Erro: arquivo inválido.');
-    }
+    } catch (err) { alert('Erro ao importar: arquivo inválido.'); }
   };
   reader.readAsText(file);
   event.target.value = '';
 }
 
 function resetarDados() {
-  if (prompt('Digite "RESETAR" para confirmar:') === 'RESETAR') {
-    localStorage.removeItem('mat-bb-v2');
-    estado = {
-      itens: {},
-      historico: [],
-      metas: { questoes: 50, concluidos: 6, revisoes: 14 },
-      semana: { inicio: null, questoes: 0, concluidos: 0, revisoes: 0 }
-    };
+  const confirmacao = prompt('Digite "RESETAR" para confirmar:');
+  if (confirmacao === 'RESETAR') {
+    localStorage.removeItem('mat-bb-v3');
+    estado = { itens: {}, historico: [], metas: { questoes: 50, concluidos: 6, revisoes: 14 }, semanaDados: { inicio: null, questoes: 0, concluidos: 0, revisoes: 0 } };
     inicializarItens();
     renderizarTudo();
-    alert('Resetado!');
+    alert('Dados resetados!');
   }
 }
 
-/* ============================================
-   INICIALIZA
-   ============================================ */
+/* EVENTOS */
+document.getElementById('modal-editar').addEventListener('click', function(e) { if (e.target === this) fecharModal(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') fecharModal(); });
 document.addEventListener('DOMContentLoaded', inicializar);
 </script>
 
